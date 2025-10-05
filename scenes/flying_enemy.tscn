@@ -1,0 +1,45 @@
+[gd_scene load_steps=8 format=3 uid="uid://o2284uw2mcxs"]
+
+[ext_resource type="Script" uid="uid://d2bhs74qgedgr" path="res://scripts/flying_enemy.gd" id="1_fgwew"]
+[ext_resource type="Texture2D" uid="uid://cdpin830d8ydf" path="res://assets/monochrome_tilemap_transparent_packed.png" id="2_c4a5w"]
+[ext_resource type="PackedScene" uid="uid://c74aod1lijcu8" path="res://scenes/killzone.tscn" id="3_c4a5w"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lrtul"]
+atlas = ExtResource("2_c4a5w")
+region = Rect2(0, 304, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dyvm4"]
+atlas = ExtResource("2_c4a5w")
+region = Rect2(16, 304, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ms2v3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lrtul")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dyvm4")
+}],
+"loop": true,
+"name": &"Fly",
+"speed": 7.5
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lrtul"]
+radius = 5.0
+
+[node name="FlyingEnemy" type="Node2D"]
+script = ExtResource("1_fgwew")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ms2v3")
+animation = &"Fly"
+autoplay = "Fly"
+frame_progress = 0.386395
+
+[node name="Killzone" parent="." instance=ExtResource("3_c4a5w")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_lrtul")

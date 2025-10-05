@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://ri1sx6duqljl"]
+
+[ext_resource type="AudioStream" uid="uid://djyiv0cabhvk0" path="res://music/exploration.ogg" id="1_05ggv"]
+
+[sub_resource type="GDScript" id="GDScript_ibx2e"]
+script/source = "extends AudioStreamPlayer
+
+func _ready() -> void:
+	play()
+"
+
+[node name="music" type="AudioStreamPlayer"]
+stream = ExtResource("1_05ggv")
+autoplay = true
+bus = &"Music"
+script = SubResource("GDScript_ibx2e")

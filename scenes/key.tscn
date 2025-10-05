@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://dclku2xlaeu1d"]
+
+[ext_resource type="Texture2D" uid="uid://cdpin830d8ydf" path="res://assets/monochrome_tilemap_transparent_packed.png" id="1_fttkb"]
+[ext_resource type="Script" uid="uid://ctfehoj2losyg" path="res://scripts/key.gd" id="1_wy8tx"]
+[ext_resource type="FontFile" uid="uid://basqycvpfvco2" path="res://fonts/PixelOperator8.ttf" id="2_wy8tx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_brs3p"]
+size = Vector2(12, 8)
+
+[node name="Key" type="Node2D"]
+script = ExtResource("1_wy8tx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_fttkb")
+region_enabled = true
+region_rect = Rect2(256, 64, 16, 16)
+
+[node name="KeyLabel" type="Label" parent="."]
+visible = false
+offset_left = -94.0
+offset_top = -30.0
+offset_right = 98.0
+offset_bottom = -7.0
+theme_override_fonts/font = ExtResource("2_wy8tx")
+theme_override_font_sizes/font_size = 8
+text = "You need 6 coins
+to buy the key"
+horizontal_alignment = 1
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_brs3p")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
