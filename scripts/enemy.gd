@@ -20,3 +20,6 @@ func _process(delta: float) -> void:
 	elif ray_cast_right.is_colliding() or !ray_cast_down_right.is_colliding():
 		animation.flip_h = true
 		direction_right = -1
+
+func take_damage():
+	pass

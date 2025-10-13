@@ -1,16 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://ri1sx6duqljl"]
+[gd_scene load_steps=4 format=3 uid="uid://ri1sx6duqljl"]
 
 [ext_resource type="AudioStream" uid="uid://djyiv0cabhvk0" path="res://music/exploration.ogg" id="1_05ggv"]
+[ext_resource type="Script" uid="uid://h0ktayyknt28" path="res://scripts/music.gd" id="1_qnihg"]
+[ext_resource type="AudioStream" uid="uid://ds5mm5bxi6jh4" path="res://music/arcade.ogg" id="3_ejojg"]
 
-[sub_resource type="GDScript" id="GDScript_ibx2e"]
-script/source = "extends AudioStreamPlayer
+[node name="Music" type="Node"]
+script = ExtResource("1_qnihg")
 
-func _ready() -> void:
-	play()
-"
-
-[node name="music" type="AudioStreamPlayer"]
+[node name="GameMusic" type="AudioStreamPlayer" parent="." groups=["Music"]]
 stream = ExtResource("1_05ggv")
-autoplay = true
 bus = &"Music"
-script = SubResource("GDScript_ibx2e")
+
+[node name="MenuMusic" type="AudioStreamPlayer" parent="." groups=["Music"]]
+stream = ExtResource("3_ejojg")
+bus = &"Music"

@@ -73,9 +73,8 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d2wvv"]
-radius = 4.0
-height = 10.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qhqgy"]
+size = Vector2(8, 9)
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -85,8 +84,8 @@ script = ExtResource("1_g2els")
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_y4r1p")
 animation = &"idle"
-frame_progress = 0.260072
+frame_progress = 0.860354
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 3)
-shape = SubResource("CapsuleShape2D_d2wvv")
+position = Vector2(0, 3.5)
+shape = SubResource("RectangleShape2D_qhqgy")

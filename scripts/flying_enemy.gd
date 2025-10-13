@@ -36,3 +36,5 @@ func on_reach_point():
 	await get_tree().create_timer(wait_time).timeout
 	waiting = false
 	
+func take_damage():
+	pass

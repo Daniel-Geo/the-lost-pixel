@@ -1,0 +1,235 @@
+[gd_scene load_steps=20 format=3 uid="uid://dhr5xvp1f02i2"]
+
+[ext_resource type="Texture2D" uid="uid://didp8hvt4u06f" path="res://assets/background.png" id="1_5qlyv"]
+[ext_resource type="Script" uid="uid://cd3ptoy3uum6x" path="res://scripts/controls_menu.gd" id="1_8jatx"]
+[ext_resource type="FontFile" uid="uid://basqycvpfvco2" path="res://fonts/PixelOperator8.ttf" id="2_d0u3u"]
+[ext_resource type="FontFile" uid="uid://dye1loha3isvx" path="res://fonts/PixelOperator8-Bold.ttf" id="2_jfu8g"]
+[ext_resource type="Texture2D" uid="uid://cdpin830d8ydf" path="res://assets/monochrome_tilemap_transparent_packed.png" id="4_8jatx"]
+[ext_resource type="Texture2D" uid="uid://dqndl0m54lmxu" path="res://assets/player_idle_sprite.png" id="5_62f8b"]
+[ext_resource type="Texture2D" uid="uid://sg2gfllfj7mg" path="res://assets/soul-spell-projectile.png" id="6_2q5co"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n0kuk"]
+texture = ExtResource("1_5qlyv")
+modulate_color = Color(1, 1, 1, 0.333333)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8jatx"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_62f8b"]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2q5co"]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hy8xy"]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
+atlas = ExtResource("4_8jatx")
+region = Rect2(0, 192, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2els"]
+atlas = ExtResource("4_8jatx")
+region = Rect2(80, 192, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tuyoq"]
+atlas = ExtResource("4_8jatx")
+region = Rect2(16, 192, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fjrip"]
+atlas = ExtResource("4_8jatx")
+region = Rect2(32, 192, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
+atlas = ExtResource("4_8jatx")
+region = Rect2(48, 192, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ur7pv"]
+atlas = ExtResource("4_8jatx")
+region = Rect2(64, 192, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hy8xy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqkch")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_62f8b")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g2els")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tuyoq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fjrip")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smehm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ur7pv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smehm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fjrip")
+}],
+"loop": true,
+"name": &"run",
+"speed": 10.0
+}]
+
+[node name="ControlsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8jatx")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_n0kuk")
+
+[node name="MainLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -244.0
+offset_top = 10.0
+offset_right = 244.0
+offset_bottom = 74.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_jfu8g")
+theme_override_font_sizes/font_size = 64
+text = "Controls"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MovementLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -174.0
+offset_top = -209.0
+offset_right = 174.0
+offset_bottom = -177.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/line_spacing = 30
+theme_override_fonts/font = ExtResource("2_d0u3u")
+theme_override_font_sizes/font_size = 32
+text = "Move with A & D keys or the left & right arrow keys
+Jump with W key, up arrow key, and the space key
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SpellLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -628.0
+offset_top = -33.0
+offset_right = 628.0
+offset_bottom = 61.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/line_spacing = 30
+theme_override_fonts/font = ExtResource("2_d0u3u")
+theme_override_font_sizes/font_size = 32
+text = "Use your soul spell projectile with the X or L keys
+after you have accuired it in level 2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -174.0
+offset_top = -86.0
+offset_right = 174.0
+offset_bottom = -34.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_d0u3u")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxFlat_8jatx")
+theme_override_styles/hover = SubResource("StyleBoxFlat_62f8b")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2q5co")
+theme_override_styles/normal = SubResource("StyleBoxFlat_hy8xy")
+text = "Back"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.405
+anchor_top = -0.003
+anchor_right = 0.608
+anchor_bottom = 0.870833
+offset_left = 0.599976
+offset_top = 0.16
+offset_right = -0.240051
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VBoxContainer"]
+texture_filter = 1
+position = Vector2(136, 238)
+scale = Vector2(10, 10)
+sprite_frames = SubResource("SpriteFrames_hy8xy")
+animation = &"run"
+autoplay = "run"
+
+[node name="Sprite2D" type="Sprite2D" parent="VBoxContainer"]
+position = Vector2(131, 532)
+scale = Vector2(10, 10)
+texture = ExtResource("6_2q5co")
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

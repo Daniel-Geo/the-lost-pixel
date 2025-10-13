@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://cuetrkaqtmq3e"]
 
-[ext_resource type="Script" uid="uid://s5n00kd3yl0x" path="res://treasure.gd" id="1_it12x"]
+[ext_resource type="Script" uid="uid://s5n00kd3yl0x" path="res://scripts/treasure.gd" id="1_it12x"]
 [ext_resource type="Texture2D" uid="uid://cdpin830d8ydf" path="res://assets/monochrome_tilemap_transparent_packed.png" id="2_0g4qu"]
 [ext_resource type="AudioStream" uid="uid://dibk7f7ghanw7" path="res://sfx/retro-win.mp3" id="3_0g4qu"]
 [ext_resource type="FontFile" uid="uid://basqycvpfvco2" path="res://fonts/PixelOperator8.ttf" id="4_wqbho"]
