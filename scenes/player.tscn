@@ -5,6 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://dqndl0m54lmxu" path="res://assets/player_idle_sprite.png" id="3_qhqgy"]
 [ext_resource type="AudioStream" uid="uid://rp2vhs6y5r6t" path="res://sfx/retro-hurt.mp3" id="5_qlg0r"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ur7pv"]
+atlas = ExtResource("2_qhqgy")
+region = Rect2(64, 192, 16, 16)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_dqkch"]
 atlas = ExtResource("2_qhqgy")
 region = Rect2(0, 192, 16, 16)
@@ -25,12 +29,16 @@ region = Rect2(32, 192, 16, 16)
 atlas = ExtResource("2_qhqgy")
 region = Rect2(48, 192, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ur7pv"]
-atlas = ExtResource("2_qhqgy")
-region = Rect2(64, 192, 16, 16)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_y4r1p"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ur7pv")
+}],
+"loop": true,
+"name": &"dash",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_dqkch")
@@ -86,7 +94,6 @@ texture_filter = 1
 position = Vector2(0, -4)
 sprite_frames = SubResource("SpriteFrames_y4r1p")
 animation = &"idle"
-frame_progress = 0.860354
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -0.5)
@@ -108,4 +115,12 @@ process_callback = 0
 one_shot = true
 ignore_time_scale = true
 
+[node name="DashTimer" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="DashCooldown" type="Timer" parent="."]
+wait_time = 0.5
+
 [connection signal="timeout" from="KillTimer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]

@@ -1,6 +1,5 @@
 extends Node2D
 
-
 const SPEED = 60.0
 var direction_right = 1
 

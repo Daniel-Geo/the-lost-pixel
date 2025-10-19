@@ -287,7 +287,7 @@ texture = ExtResource("2_2os1m")
 7:9/0 = 0
 7:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(6.1152, -3.0576, 8, 0.539577, 8, -6.83463, -8, -6.83463, -8, -3.77703)
 8:9/0 = 0
-8:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -6.91491, 8, -6.86755, 8, 8, -8, 8)
+8:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -6.79332, 8, -6.79332, 8, 8, -8, 8)
 9:9/0 = 0
 9:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6.1152, -3.0576, -8, 0.539577, -8, -6.83463, 8, -6.83463, 8, -3.77703)
 10:9/0 = 0
@@ -1049,7 +1049,7 @@ tile_set = SubResource("TileSet_gee14")
 
 [node name="Player" parent="." instance=ExtResource("3_go7sj")]
 unique_name_in_owner = true
-position = Vector2(0, -8)
+position = Vector2(0, -4)
 
 [node name="Killzone" parent="." instance=ExtResource("5_2aecg")]
 position = Vector2(0, 128)

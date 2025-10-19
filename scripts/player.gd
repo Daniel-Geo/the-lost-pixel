@@ -3,40 +3,59 @@ extends CharacterBody2D
 
 const SPEED = 150.0
 const JUMP_VELOCITY = -300.0
+const DASH_SPEED = 500.0
+const INITIAL_DASH_TIMES = 1
+
+var current_dash_times = INITIAL_DASH_TIMES
+var is_dashing := false
+var in_dash_cooldown := false
 
 @onready var animation: AnimatedSprite2D = $AnimatedSprite2D
+@onready var dash_timer: Timer = $DashTimer
+@onready var dash_cooldown: Timer = $DashCooldown
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-		animation.play("jump")
+	if !is_dashing:
+		if not is_on_floor():
+			velocity += get_gravity() * delta
+			animation.play("jump")
 
-	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+		if Input.is_action_just_pressed("jump") and is_on_floor():
+			velocity.y = JUMP_VELOCITY
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis("left", "right")
-	if direction:
-		velocity.x = direction * SPEED
-		if direction == 1:
-			animation.flip_h = false
-		elif direction == -1:
-			animation.flip_h = true
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED) 
-		
-	if is_on_floor():
+		var direction := Input.get_axis("left", "right")
 		if direction:
-			animation.play("run")
+			velocity.x = direction * SPEED
+			if direction == 1:
+				animation.flip_h = false
+			elif direction == -1:
+				animation.flip_h = true
 		else:
-			animation.play("idle")
+			velocity.x = move_toward(velocity.x, 0, SPEED) 
+			
+		if is_on_floor():
+			current_dash_times = INITIAL_DASH_TIMES
+			if direction:
+				animation.play("run")
+			else:
+				animation.play("idle")
+	else:
+		animation.play("dash")
+		velocity.y = 0
+		if !animation.flip_h:
+			velocity.x = 1 * DASH_SPEED
+		else:
+			velocity.x = -1 * DASH_SPEED
+		
 	move_and_slide()
 	
 	if Input.is_action_just_pressed("use_spell") and GameManager.acuired_spell:
 		use_spell()
+		
+	if Input.is_action_just_pressed("dash") and current_dash_times > 0 and !is_dashing and !in_dash_cooldown and GameManager.acuired_dash:
+		dash()
+		in_dash_cooldown = true
+		dash_cooldown.start()
 
 func use_spell():
 	if has_node("CollisionShape2D"):
@@ -49,7 +68,19 @@ func use_spell():
 		add_child(new_projectile)
 
 
+func dash():
+	current_dash_times -= 1
+	is_dashing = true
+	dash_timer.start()
+
 func _on_timer_timeout() -> void:
-	print("Timer ended")
 	Engine.time_scale = 1.0
 	get_tree().reload_current_scene()
+
+
+func _on_dash_timer_timeout() -> void:
+	is_dashing = false
+
+
+func _on_dash_cooldown_timeout() -> void:
+	in_dash_cooldown = false

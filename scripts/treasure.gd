@@ -21,7 +21,9 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		win_label.show()
 		animation.play("opened")
 		audio_player.play()
-		await get_tree().create_timer(5).timeout
+		Engine.time_scale = 0.5
+		await get_tree().create_timer(2).timeout
+		Engine.time_scale = 1
 		bus_index = AudioServer.get_bus_index("Music")
 		AudioServer.set_bus_mute(bus_index, false)
 		bus_index = AudioServer.get_bus_index("SFX")
