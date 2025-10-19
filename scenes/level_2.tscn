@@ -1,15 +1,16 @@
-[gd_scene load_steps=16 format=4 uid="uid://b6fp0pyq4r84f"]
+[gd_scene load_steps=21 format=4 uid="uid://b6fp0pyq4r84f"]
 
 [ext_resource type="Script" uid="uid://bw6bucq7xhn34" path="res://scripts/game_manager.gd" id="1_b4j7a"]
 [ext_resource type="Texture2D" uid="uid://cdpin830d8ydf" path="res://assets/monochrome_tilemap_transparent_packed.png" id="2_wo48x"]
 [ext_resource type="PackedScene" uid="uid://c6a3ng7t78g57" path="res://scenes/player.tscn" id="3_y0kc7"]
-[ext_resource type="FontFile" uid="uid://basqycvpfvco2" path="res://fonts/PixelOperator8.ttf" id="4_ne2mo"]
 [ext_resource type="PackedScene" uid="uid://c74aod1lijcu8" path="res://scenes/killzone.tscn" id="5_6cvei"]
 [ext_resource type="PackedScene" uid="uid://c4syptu3nod08" path="res://scenes/enemy.tscn" id="6_y0kc7"]
 [ext_resource type="PackedScene" uid="uid://o2284uw2mcxs" path="res://scenes/flying_enemy.tscn" id="7_ne2mo"]
 [ext_resource type="PackedScene" uid="uid://liuv47gw6dw8" path="res://scenes/coin.tscn" id="8_ne2mo"]
 [ext_resource type="PackedScene" uid="uid://dclku2xlaeu1d" path="res://scenes/key.tscn" id="9_que50"]
 [ext_resource type="PackedScene" uid="uid://cuetrkaqtmq3e" path="res://scenes/treasure.tscn" id="10_hey2k"]
+[ext_resource type="FontFile" uid="uid://basqycvpfvco2" path="res://fonts/PixelOperator8.ttf" id="10_que50"]
+[ext_resource type="PackedScene" uid="uid://doma5c4aw3btc" path="res://scenes/pause_menu.tscn" id="11_hey2k"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_que50"]
 texture = ExtResource("2_wo48x")
@@ -286,7 +287,7 @@ texture = ExtResource("2_wo48x")
 7:9/0 = 0
 7:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(6.1152, -3.0576, 8, 0.539577, 8, -6.83463, -8, -6.83463, -8, -3.77703)
 8:9/0 = 0
-8:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 8, 8, 8, 8, -8, -8, -8)
+8:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -6.76241, 8, -6.81971, 8, 8, -8, 8)
 9:9/0 = 0
 9:9/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6.1152, -3.0576, -8, 0.539577, -8, -6.83463, 8, -6.83463, 8, -3.77703)
 10:9/0 = 0
@@ -1008,12 +1009,34 @@ sources/1 = SubResource("TileSetAtlasSource_172wr")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_fldb1"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hey2k"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_172wr"]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g2hoc"]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fldb1"]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(1, 1, 1, 1)
+
 [node name="Level2" type="Node2D"]
 
-[node name="GameManager" type="Node2D" parent="." node_paths=PackedStringArray("score_label")]
+[node name="GameManager" type="Node2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("1_b4j7a")
-score_label = NodePath("../Player/ScoreLabel")
 
 [node name="Ground" type="TileMapLayer" parent="."]
 texture_filter = 1
@@ -1028,28 +1051,10 @@ tile_set = SubResource("TileSet_g2hoc")
 unique_name_in_owner = true
 position = Vector2(0, -8)
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
-zoom = Vector2(5, 5)
-limit_bottom = 128
-drag_left_margin = 0.1
-drag_right_margin = 0.1
-
-[node name="ScoreLabel" type="Label" parent="Player"]
-unique_name_in_owner = true
-offset_left = -111.0
-offset_top = -59.0
-offset_right = -60.0
-offset_bottom = -51.0
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_fonts/font = ExtResource("4_ne2mo")
-theme_override_font_sizes/font_size = 8
-text = "Coins x0"
-
-[node name="Deathzone" parent="." instance=ExtResource("5_6cvei")]
+[node name="Killzone" parent="." instance=ExtResource("5_6cvei")]
 position = Vector2(0, 128)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Deathzone"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
 shape = SubResource("WorldBoundaryShape2D_fldb1")
 
 [node name="Enemy" parent="." instance=ExtResource("6_y0kc7")]
@@ -1131,3 +1136,42 @@ req_coins = 6
 [node name="Treasure" parent="." instance=ExtResource("10_hey2k")]
 position = Vector2(1736, -72)
 next_scene = "main_menu"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 16.0
+offset_top = 24.0
+offset_right = 67.0
+offset_bottom = 32.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("10_que50")
+theme_override_font_sizes/font_size = 40
+text = "Coins x0"
+
+[node name="BackButton" type="Button" parent="CanvasLayer"]
+unique_name_in_owner = true
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -614.0
+offset_top = -79.0
+offset_right = -464.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("10_que50")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxFlat_hey2k")
+theme_override_styles/hover = SubResource("StyleBoxFlat_172wr")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_g2hoc")
+theme_override_styles/normal = SubResource("StyleBoxFlat_fldb1")
+text = "Back"
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("11_hey2k")]

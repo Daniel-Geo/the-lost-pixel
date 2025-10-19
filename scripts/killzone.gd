@@ -1,15 +1,7 @@
 extends Area2D
 
-@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
-@onready var timer: Timer = $Timer
-
 func _on_body_entered(body: Node2D) -> void:
-	audio_stream_player.play()
 	Engine.time_scale = 0.5
+	body.get_node("HurtSFX").play()
 	body.get_node("CollisionShape2D").queue_free()
-	timer.start()
-	
-
-func _on_timer_timeout() -> void:
-	Engine.time_scale = 1.0
-	get_tree().reload_current_scene()
+	body.get_node("KillTimer").start()

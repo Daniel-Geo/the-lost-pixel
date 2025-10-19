@@ -39,11 +39,17 @@ func _physics_process(delta: float) -> void:
 		use_spell()
 
 func use_spell():
-	print("attack")
-	const PROJECTILE = preload("res://scenes/soul_spell_projectile.tscn")
-	var new_projectile = PROJECTILE.instantiate()
-	if animation.flip_h == false:
-		new_projectile.rotation = 0
-	elif animation.flip_h == true:
-		new_projectile.rotation = PI
-	add_child(new_projectile)
+	if has_node("CollisionShape2D"):
+		const PROJECTILE = preload("res://scenes/soul_spell_projectile.tscn")
+		var new_projectile = PROJECTILE.instantiate()
+		if animation.flip_h == false:
+			new_projectile.rotation = 0
+		elif animation.flip_h == true:
+			new_projectile.rotation = PI
+		add_child(new_projectile)
+
+
+func _on_timer_timeout() -> void:
+	print("Timer ended")
+	Engine.time_scale = 1.0
+	get_tree().reload_current_scene()
