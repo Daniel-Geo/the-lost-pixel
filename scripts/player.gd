@@ -14,6 +14,9 @@ var in_dash_cooldown := false
 @onready var dash_timer: Timer = $DashTimer
 @onready var dash_cooldown: Timer = $DashCooldown
 
+func _ready() -> void:
+	Engine.time_scale = 1.0
+
 func _physics_process(delta: float) -> void:
 	if !is_dashing:
 		if not is_on_floor():
@@ -73,14 +76,12 @@ func dash():
 	is_dashing = true
 	dash_timer.start()
 
-func _on_timer_timeout() -> void:
+func _on_kill_timer_timeout() -> void:
 	Engine.time_scale = 1.0
 	get_tree().reload_current_scene()
 
-
 func _on_dash_timer_timeout() -> void:
 	is_dashing = false
-
 
 func _on_dash_cooldown_timeout() -> void:
 	in_dash_cooldown = false

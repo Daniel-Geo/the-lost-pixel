@@ -48,17 +48,17 @@ shape = SubResource("CapsuleShape2D_ipns3")
 [node name="RayCastLeft" type="RayCast2D" parent="."]
 position = Vector2(0, 2)
 rotation = 1.5708
-target_position = Vector2(2.38419e-07, 8)
+target_position = Vector2(2.52724e-05, 7)
 
 [node name="RayCastDownLeft" type="RayCast2D" parent="."]
-position = Vector2(-8, 2)
+position = Vector2(-7, 2)
 target_position = Vector2(2.38419e-07, 8)
 
 [node name="RayCastRight" type="RayCast2D" parent="."]
 position = Vector2(0, 2)
 rotation = -1.5708
-target_position = Vector2(-2.38419e-07, 8)
+target_position = Vector2(-2.52724e-05, 7)
 
 [node name="RayCastDownRight" type="RayCast2D" parent="."]
-position = Vector2(8, 2)
+position = Vector2(7, 2)
 target_position = Vector2(-2.38419e-07, 8)
