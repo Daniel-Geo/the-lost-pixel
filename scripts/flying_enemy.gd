@@ -4,6 +4,10 @@ extends Node2D
 @export var move_time = 4.0
 @export var wait_time = 0.5
 
+@onready var animation: AnimatedSprite2D = $AnimatedSprite2D
+@onready var explosion_sfx: AudioStreamPlayer = $ExplosionSFX
+@onready var explosion: CPUParticles2D = $Explosion
+
 var start_pos: Vector2
 var end_pos: Vector2
 var target

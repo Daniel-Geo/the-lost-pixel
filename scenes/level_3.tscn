@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://doma5c4aw3btc" path="res://scenes/pause_menu.tscn" id="6_vcx5n"]
 [ext_resource type="PackedScene" uid="uid://cuetrkaqtmq3e" path="res://scenes/treasure.tscn" id="7_ax3dk"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_56dhn"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ax3dk"]
 texture = ExtResource("3_hhfj6")
 1:0/0 = 0
 2:0/0 = 0
@@ -604,7 +604,7 @@ texture = ExtResource("3_hhfj6")
 
 [sub_resource type="TileSet" id="TileSet_ax3dk"]
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_56dhn")
+sources/0 = SubResource("TileSetAtlasSource_ax3dk")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q2dsb"]
 texture = ExtResource("3_hhfj6")
@@ -1008,6 +1008,21 @@ texture = ExtResource("3_hhfj6")
 [sub_resource type="TileSet" id="TileSet_p3r0x"]
 sources/1 = SubResource("TileSetAtlasSource_q2dsb")
 
+[sub_resource type="Animation" id="Animation_q2dsb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1088, -244)]
+}
+
 [sub_resource type="Animation" id="Animation_ax3dk"]
 resource_name = "move"
 length = 2.0
@@ -1023,21 +1038,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(1088, -244), Vector2(1344, -244)]
-}
-
-[sub_resource type="Animation" id="Animation_q2dsb"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1088, -244)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_p3r0x"]
@@ -1088,7 +1088,7 @@ tile_set = SubResource("TileSet_p3r0x")
 
 [node name="Player" parent="." instance=ExtResource("1_70nk6")]
 unique_name_in_owner = true
-position = Vector2(0, -4)
+position = Vector2(0, -4.1)
 
 [node name="Platform" parent="." instance=ExtResource("5_56dhn")]
 position = Vector2(288, 0)
@@ -1133,30 +1133,27 @@ position = Vector2(1584, -182)
 position = Vector2(1608, -135)
 
 [node name="Enemy4" parent="." instance=ExtResource("4_ax3dk")]
-position = Vector2(1628, -103)
+position = Vector2(1608, -103)
 
 [node name="Enemy5" parent="." instance=ExtResource("4_ax3dk")]
-position = Vector2(1589, -103)
-
-[node name="Enemy6" parent="." instance=ExtResource("4_ax3dk")]
 position = Vector2(1605, -55)
 
-[node name="Enemy7" parent="." instance=ExtResource("4_ax3dk")]
+[node name="Enemy6" parent="." instance=ExtResource("4_ax3dk")]
 position = Vector2(1573, -23)
 
-[node name="Enemy8" parent="." instance=ExtResource("4_ax3dk")]
+[node name="Enemy7" parent="." instance=ExtResource("4_ax3dk")]
 position = Vector2(1605, -7)
 
-[node name="Enemy9" parent="." instance=ExtResource("4_ax3dk")]
+[node name="Enemy8" parent="." instance=ExtResource("4_ax3dk")]
 position = Vector2(1573, 41)
 
-[node name="Enemy10" parent="." instance=ExtResource("4_ax3dk")]
+[node name="Enemy9" parent="." instance=ExtResource("4_ax3dk")]
 position = Vector2(1621, 41)
 
-[node name="Enemy11" parent="." instance=ExtResource("4_ax3dk")]
+[node name="Enemy10" parent="." instance=ExtResource("4_ax3dk")]
 position = Vector2(1621, 73)
 
-[node name="Enemy12" parent="." instance=ExtResource("4_ax3dk")]
+[node name="Enemy11" parent="." instance=ExtResource("4_ax3dk")]
 position = Vector2(1573, 89)
 
 [node name="FlyingEnemy" parent="." instance=ExtResource("4_56dhn")]
@@ -1246,7 +1243,7 @@ req_coins = 5
 
 [node name="Treasure" parent="." instance=ExtResource("7_ax3dk")]
 position = Vector2(2000, -304)
-next_scene = "main_menu"
+next_scene = "level_4"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

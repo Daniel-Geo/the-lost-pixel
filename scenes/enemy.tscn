@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://c4syptu3nod08"]
+[gd_scene load_steps=10 format=3 uid="uid://c4syptu3nod08"]
 
 [ext_resource type="Script" uid="uid://dxutluo1nn35m" path="res://scripts/enemy.gd" id="1_4ra3w"]
 [ext_resource type="Texture2D" uid="uid://cdpin830d8ydf" path="res://assets/monochrome_tilemap_transparent_packed.png" id="2_5uy6h"]
 [ext_resource type="PackedScene" uid="uid://c74aod1lijcu8" path="res://scenes/killzone.tscn" id="3_c4w8v"]
+[ext_resource type="PackedScene" uid="uid://crlcmf67mx67q" path="res://scenes/explosion.tscn" id="4_5uy6h"]
+[ext_resource type="AudioStream" uid="uid://bfvswkwhoennt" path="res://sfx/retro-explosion.mp3" id="5_c4w8v"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xwavj"]
 atlas = ExtResource("2_5uy6h")
@@ -36,6 +38,7 @@ script = ExtResource("1_4ra3w")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_md484")
 animation = &"move"
+autoplay = "move"
 frame = 1
 frame_progress = 0.226982
 
@@ -45,20 +48,26 @@ frame_progress = 0.226982
 position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_ipns3")
 
+[node name="Explosion" parent="." instance=ExtResource("4_5uy6h")]
+
 [node name="RayCastLeft" type="RayCast2D" parent="."]
 position = Vector2(0, 2)
 rotation = 1.5708
-target_position = Vector2(2.52724e-05, 7)
+target_position = Vector2(2.16961e-05, 6)
 
 [node name="RayCastDownLeft" type="RayCast2D" parent="."]
-position = Vector2(-7, 2)
+position = Vector2(-6, 2)
 target_position = Vector2(2.38419e-07, 8)
 
 [node name="RayCastRight" type="RayCast2D" parent="."]
 position = Vector2(0, 2)
 rotation = -1.5708
-target_position = Vector2(-2.52724e-05, 7)
+target_position = Vector2(-2.16961e-05, 6)
 
 [node name="RayCastDownRight" type="RayCast2D" parent="."]
-position = Vector2(7, 2)
+position = Vector2(6, 2)
 target_position = Vector2(-2.38419e-07, 8)
+
+[node name="ExplosionSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_c4w8v")
+bus = &"SFX"

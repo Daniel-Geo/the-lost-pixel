@@ -19,6 +19,11 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 	queue_free()
 	var enemy = area.get_parent()
 	if enemy.has_method("take_damage"):
+		enemy.explosion_sfx.play()
+		enemy.get_node("Killzone").process_mode = Node.PROCESS_MODE_DISABLED
+		enemy.animation.visible = false
+		enemy.explosion.emitting = true
+		await get_tree().create_timer(0.6).timeout
 		enemy.queue_free()
 
 

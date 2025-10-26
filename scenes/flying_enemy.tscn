@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://o2284uw2mcxs"]
+[gd_scene load_steps=10 format=3 uid="uid://o2284uw2mcxs"]
 
 [ext_resource type="Script" uid="uid://d2bhs74qgedgr" path="res://scripts/flying_enemy.gd" id="1_fgwew"]
 [ext_resource type="Texture2D" uid="uid://cdpin830d8ydf" path="res://assets/monochrome_tilemap_transparent_packed.png" id="2_c4a5w"]
 [ext_resource type="PackedScene" uid="uid://c74aod1lijcu8" path="res://scenes/killzone.tscn" id="3_c4a5w"]
+[ext_resource type="PackedScene" uid="uid://crlcmf67mx67q" path="res://scenes/explosion.tscn" id="4_lrtul"]
+[ext_resource type="AudioStream" uid="uid://bfvswkwhoennt" path="res://sfx/retro-explosion.mp3" id="5_dyvm4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lrtul"]
 atlas = ExtResource("2_c4a5w")
@@ -29,10 +31,6 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_lrtul"]
 radius = 5.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c4a5w"]
-radius = 5.0
-height = 10.0
-
 [node name="FlyingEnemy" type="Node2D"]
 script = ExtResource("1_fgwew")
 
@@ -48,8 +46,8 @@ frame_progress = 0.386395
 position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_lrtul")
 
-[node name="RigidBody2D" type="AnimatableBody2D" parent="."]
+[node name="Explosion" parent="." instance=ExtResource("4_lrtul")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
-position = Vector2(0, 2)
-shape = SubResource("CapsuleShape2D_c4a5w")
+[node name="ExplosionSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_dyvm4")
+bus = &"SFX"

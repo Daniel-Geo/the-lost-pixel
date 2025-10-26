@@ -10,12 +10,15 @@ var acuired_dash = false
 
 func _ready() -> void:
 	if get_tree().current_scene:
-		if get_tree().current_scene.name == "Level3":
+		if get_tree().current_scene.name == "Level3" or get_tree().current_scene.name == "Level4":
 			GameManager.acuired_dash = true
-		if get_tree().current_scene.name == "Level2" or get_tree().current_scene.name == "Level3":
+		if get_tree().current_scene.name == "Level2" or get_tree().current_scene.name == "Level3" or get_tree().current_scene.name == "Level4":
 			GameManager.acuired_spell = true
+		if get_tree().current_scene.name == "Level2":
+			GameManager.acuired_dash = false
 		if get_tree().current_scene.name == "Level1":
 			GameManager.acuired_spell = false
+			GameManager.acuired_dash = false
 
 func add_point():
 	score += 1

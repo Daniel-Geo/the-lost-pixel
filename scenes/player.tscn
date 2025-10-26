@@ -1,9 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://c6a3ng7t78g57"]
+[gd_scene load_steps=16 format=3 uid="uid://c6a3ng7t78g57"]
 
 [ext_resource type="Script" uid="uid://bi5tvwemupb2w" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://cdpin830d8ydf" path="res://assets/monochrome_tilemap_transparent_packed.png" id="2_qhqgy"]
 [ext_resource type="Texture2D" uid="uid://dqndl0m54lmxu" path="res://assets/player_idle_sprite.png" id="3_qhqgy"]
+[ext_resource type="PackedScene" uid="uid://crlcmf67mx67q" path="res://scenes/explosion.tscn" id="4_qlg0r"]
 [ext_resource type="AudioStream" uid="uid://rp2vhs6y5r6t" path="res://sfx/retro-hurt.mp3" id="5_qlg0r"]
+[ext_resource type="AudioStream" uid="uid://bunhalgn5yofw" path="res://sfx/retro-spell.mp3" id="6_tuyoq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ur7pv"]
 atlas = ExtResource("2_qhqgy")
@@ -17,10 +19,6 @@ region = Rect2(0, 192, 16, 16)
 atlas = ExtResource("2_qhqgy")
 region = Rect2(80, 192, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tuyoq"]
-atlas = ExtResource("2_qhqgy")
-region = Rect2(16, 192, 16, 16)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_fjrip"]
 atlas = ExtResource("2_qhqgy")
 region = Rect2(32, 192, 16, 16)
@@ -28,6 +26,10 @@ region = Rect2(32, 192, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
 atlas = ExtResource("2_qhqgy")
 region = Rect2(48, 192, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tuyoq"]
+atlas = ExtResource("2_qhqgy")
+region = Rect2(16, 192, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_y4r1p"]
 animations = [{
@@ -60,9 +62,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_tuyoq")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_fjrip")
 }, {
 "duration": 1.0,
@@ -70,6 +69,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ur7pv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tuyoq")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_smehm")
@@ -84,6 +86,10 @@ animations = [{
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qhqgy"]
 size = Vector2(8, 9)
+
+[sub_resource type="Curve" id="Curve_tuyoq"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.251425), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -106,8 +112,26 @@ limit_bottom = 128
 drag_left_margin = 0.1
 drag_right_margin = 0.1
 
+[node name="Explosion" parent="." instance=ExtResource("4_qlg0r")]
+
+[node name="Dash" type="CPUParticles2D" parent="."]
+position = Vector2(-4, -2.5)
+emitting = false
+amount = 20
+lifetime = 0.2
+emission_shape = 3
+emission_rect_extents = Vector2(1, 4)
+gravity = Vector2(0, 0)
+scale_amount_min = 0.5
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_tuyoq")
+
 [node name="HurtSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_qlg0r")
+bus = &"SFX"
+
+[node name="SpellSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_tuyoq")
 bus = &"SFX"
 
 [node name="KillTimer" type="Timer" parent="."]
@@ -121,6 +145,10 @@ wait_time = 0.1
 [node name="DashCooldown" type="Timer" parent="."]
 wait_time = 0.5
 
+[node name="SpellCooldown" type="Timer" parent="."]
+wait_time = 0.4
+
 [connection signal="timeout" from="KillTimer" to="." method="_on_kill_timer_timeout"]
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
+[connection signal="timeout" from="SpellCooldown" to="." method="_on_spell_cooldown_timeout"]

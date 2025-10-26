@@ -1,5 +1,7 @@
 extends Control
 
+var music_bus_index = AudioServer.get_bus_index("Music")
+
 func _ready() -> void:
 	get_tree().paused = false
 	visible = false
@@ -26,10 +28,13 @@ func _on_resume_button_pressed() -> void:
 
 func _on_restart_button_pressed() -> void:
 	resume()
+	AudioServer.set_bus_mute(music_bus_index, false)
 	get_tree().reload_current_scene()
+	
 
 
 func _on_main_menu_button_pressed() -> void:
 	resume()
+	AudioServer.set_bus_mute(music_bus_index, false)
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 	
