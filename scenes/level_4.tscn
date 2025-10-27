@@ -1163,3 +1163,5 @@ position = Vector2(264, -64)
 distance = 256.0
 move_time = 3.0
 wait_time = 0.25
+
+[connection signal="pressed" from="CanvasLayer/BackButton" to="GameManager" method="_on_back_button_pressed"]

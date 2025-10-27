@@ -284,7 +284,6 @@ position = Vector2(675, 637)
 scale = Vector2(10, 10)
 sprite_frames = SubResource("SpriteFrames_hy8xy")
 animation = &"run"
-autoplay = "run"
 frame = 4
 frame_progress = 0.997687
 
@@ -295,8 +294,8 @@ lifetime = 0.5
 emission_shape = 3
 emission_rect_extents = Vector2(1, 4)
 gravity = Vector2(-980, 0)
-scale_amount_min = 0.5
-scale_amount_max = 2.0
+scale_amount_min = 2.5
+scale_amount_max = 5.0
 scale_amount_curve = SubResource("Curve_8jatx")
 
 [node name="Sprite2D" type="Sprite2D" parent="VBoxContainer"]
@@ -314,8 +313,8 @@ emission_sphere_radius = 3.0
 gravity = Vector2(-980, 0)
 radial_accel_min = -100.0
 radial_accel_max = -100.0
-scale_amount_min = 0.5
-scale_amount_max = 2.0
+scale_amount_min = 2.0
+scale_amount_max = 4.0
 scale_amount_curve = SubResource("Curve_62f8b")
 color_ramp = SubResource("Gradient_2q5co")
 
