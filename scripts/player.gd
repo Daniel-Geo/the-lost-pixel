@@ -1,15 +1,24 @@
 extends CharacterBody2D
 
 
-const SPEED = 150.0
-const JUMP_VELOCITY = -300.0
-const DASH_SPEED = 500.0
-const INITIAL_DASH_TIMES = 1
+const SPEED: float = 150.0
+const JUMP_VELOCITY: float = -300.0
+const DASH_SPEED: float = 500.0
+const INITIAL_DASH_TIMES: int = 1
+const ACCELERATION: float = 18.5
+const FRICTION:float = 22.5
+const GRAVITY_WALL: float = 100.0
+const WALL_JUMP_FORCE: float = 200.0
 
-var current_dash_times = INITIAL_DASH_TIMES
+var current_dash_times: int = INITIAL_DASH_TIMES
 var is_dashing := false
 var in_dash_cooldown := false
 var in_spell_cooldown := false
+var look_dir_x: int = 1
+
+const WALL_CONTACT_COYOTE_TIME: float = 0.1
+var wall_contact_coyote: float = 0.0
+
 
 @onready var animation: AnimatedSprite2D = $AnimatedSprite2D
 @onready var explosion_particles: CPUParticles2D = $Explosion
@@ -23,13 +32,12 @@ func _ready() -> void:
 	Engine.time_scale = 1.0
 
 func _physics_process(delta: float) -> void:
+	var x_input: float = Input.get_action_strength("right") - Input.get_action_strength("left")
+	
 	if !is_dashing:
-		if not is_on_floor():
+		if  !is_on_floor():
 			velocity += get_gravity() * delta
 			animation.play("jump")
-
-		if Input.is_action_just_pressed("jump") and is_on_floor():
-			velocity.y = JUMP_VELOCITY
 
 		var direction := Input.get_axis("left", "right")
 		if direction:
@@ -40,13 +48,37 @@ func _physics_process(delta: float) -> void:
 				animation.flip_h = true
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED) 
-			
+		
 		if is_on_floor():
+			if Input.is_action_just_pressed("jump"):
+					velocity.y = JUMP_VELOCITY
 			current_dash_times = INITIAL_DASH_TIMES
 			if direction:
 				animation.play("run")
 			else:
 				animation.play("idle")
+					
+		if GameManager.acuired_wall_jump:
+			if is_on_floor() or wall_contact_coyote > 0.0:
+				current_dash_times = INITIAL_DASH_TIMES
+				if Input.is_action_just_pressed("jump"):
+					velocity.y = JUMP_VELOCITY
+					if wall_contact_coyote > 0.0:
+						velocity.x = x_input * WALL_JUMP_FORCE
+				
+				if direction:
+					animation.play("run")
+				else:
+					animation.play("idle")
+					
+				
+			if !is_on_floor() and velocity.y > 0 and is_on_wall() and velocity.x != 0:
+				look_dir_x = sign(velocity.x)
+				wall_contact_coyote = WALL_CONTACT_COYOTE_TIME
+				velocity.y = GRAVITY_WALL
+			else:
+				wall_contact_coyote -= delta
+			
 	else:
 		animation.play("dash")
 		velocity.y = 0

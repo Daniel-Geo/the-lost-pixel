@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dhr5xvp1f02i2"]
+[gd_scene load_steps=23 format=3 uid="uid://dhr5xvp1f02i2"]
 
 [ext_resource type="Texture2D" uid="uid://didp8hvt4u06f" path="res://assets/background.png" id="1_5qlyv"]
 [ext_resource type="Script" uid="uid://cd3ptoy3uum6x" path="res://scripts/controls_menu.gd" id="1_8jatx"]
@@ -91,10 +91,10 @@ animations = [{
 "texture": SubResource("AtlasTexture_smehm")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ur7pv")
+"texture": SubResource("AtlasTexture_smehm")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_smehm")
+"texture": SubResource("AtlasTexture_ur7pv")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fjrip")
@@ -103,6 +103,17 @@ animations = [{
 "name": &"run",
 "speed": 10.0
 }]
+
+[sub_resource type="Curve" id="Curve_8jatx"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.251425), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_62f8b"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.399658), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_2q5co"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.490196)
 
 [node name="ControlsMenu" type="Control"]
 layout_mode = 3
@@ -189,15 +200,35 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -628.0
-offset_top = 235.0
+offset_top = 161.0
 offset_right = 628.0
-offset_bottom = 267.0
+offset_bottom = 193.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/line_spacing = 30
 theme_override_fonts/font = ExtResource("2_d0u3u")
 theme_override_font_sizes/font_size = 32
 text = "Dash with the C key after accuiring it in level 3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WallJumpLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -628.0
+offset_top = -129.0
+offset_right = 628.0
+offset_bottom = -97.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/line_spacing = 30
+theme_override_fonts/font = ExtResource("2_d0u3u")
+theme_override_font_sizes/font_size = 32
+text = "Wall jump after accuiring it in level 4"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -247,9 +278,45 @@ sprite_frames = SubResource("SpriteFrames_hy8xy")
 animation = &"run"
 autoplay = "run"
 
-[node name="Sprite2D" type="Sprite2D" parent="VBoxContainer"]
-position = Vector2(131, 508)
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="VBoxContainer"]
+texture_filter = 1
+position = Vector2(675, 637)
 scale = Vector2(10, 10)
+sprite_frames = SubResource("SpriteFrames_hy8xy")
+animation = &"run"
+autoplay = "run"
+frame = 4
+frame_progress = 0.997687
+
+[node name="Dash" type="CPUParticles2D" parent="VBoxContainer/AnimatedSprite2D2"]
+position = Vector2(-3, 1)
+amount = 1000
+lifetime = 0.5
+emission_shape = 3
+emission_rect_extents = Vector2(1, 4)
+gravity = Vector2(-980, 0)
+scale_amount_min = 0.5
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_8jatx")
+
+[node name="Sprite2D" type="Sprite2D" parent="VBoxContainer"]
+position = Vector2(131, 475)
+scale = Vector2(5, 5)
 texture = ExtResource("6_2q5co")
+
+[node name="Flame" type="CPUParticles2D" parent="VBoxContainer/Sprite2D"]
+position = Vector2(-3, 0)
+scale = Vector2(2, 2)
+amount = 10000
+lifetime = 0.5
+emission_shape = 1
+emission_sphere_radius = 3.0
+gravity = Vector2(-980, 0)
+radial_accel_min = -100.0
+radial_accel_max = -100.0
+scale_amount_min = 0.5
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_62f8b")
+color_ramp = SubResource("Gradient_2q5co")
 
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

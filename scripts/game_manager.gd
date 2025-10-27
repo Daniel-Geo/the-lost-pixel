@@ -1,24 +1,29 @@
 extends Node2D
 
-var score = 0
-var has_key = false
-var acuired_spell = false
-var acuired_dash = false
+var score: int = 0
+var has_key := false
+var acuired_spell := false
+var acuired_dash := false
+var acuired_wall_jump := false
 
 @onready var score_label: Label = %ScoreLabel
 @onready var back_button: Button = %BackButton
 
 func _ready() -> void:
 	if get_tree().current_scene:
+		if get_tree().current_scene.name == "Level4":
+			GameManager.acuired_wall_jump = true
 		if get_tree().current_scene.name == "Level3" or get_tree().current_scene.name == "Level4":
 			GameManager.acuired_dash = true
 		if get_tree().current_scene.name == "Level2" or get_tree().current_scene.name == "Level3" or get_tree().current_scene.name == "Level4":
 			GameManager.acuired_spell = true
 		if get_tree().current_scene.name == "Level2":
 			GameManager.acuired_dash = false
+			GameManager.acuired_wall_jump = false
 		if get_tree().current_scene.name == "Level1":
 			GameManager.acuired_spell = false
 			GameManager.acuired_dash = false
+			GameManager.acuired_wall_jump = false
 
 func add_point():
 	score += 1
