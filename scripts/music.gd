@@ -36,10 +36,16 @@ func change_music():
 		stop_all_audio()
 		game_music.play()
 		past_scene = "Level3"
+		
 	elif scene == "Level4" and past_scene != "Level4":
 		stop_all_audio()
 		game_music.play()
 		past_scene = "Level4"
+		
+	elif scene == "Level5" and past_scene != "Level5":
+		stop_all_audio()
+		game_music.play()
+		past_scene = "Level5"
 		
 func stop_all_audio():
 	for node in get_tree().get_nodes_in_group("Music"):

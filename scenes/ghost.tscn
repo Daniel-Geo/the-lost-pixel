@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://b5bh14dusvr6q"]
+
+[ext_resource type="Script" uid="uid://bjjmx84cxew1w" path="res://scripts/ghost.gd" id="1_l5lq6"]
+[ext_resource type="Texture2D" uid="uid://dpw3ypkmyn46g" path="res://assets/ghost.png" id="2_bbnym"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_veat2"]
+radius = 8.0
+height = 16.0
+
+[node name="Ghost" type="CharacterBody2D"]
+collision_mask = 3
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("1_l5lq6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_bbnym")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_veat2")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+debug_enabled = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

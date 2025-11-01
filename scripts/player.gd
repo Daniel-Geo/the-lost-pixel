@@ -14,6 +14,8 @@ var current_dash_times: int = INITIAL_DASH_TIMES
 var is_dashing := false
 var in_dash_cooldown := false
 var in_spell_cooldown := false
+var initial_jump_times := 2
+var current_jump_times: int = initial_jump_times
 var look_dir_x: int = 1
 
 const WALL_CONTACT_COYOTE_TIME: float = 0.1
@@ -50,19 +52,25 @@ func _physics_process(delta: float) -> void:
 			velocity.x = move_toward(velocity.x, 0, SPEED) 
 		
 		if is_on_floor():
-			if Input.is_action_just_pressed("jump"):
+			if Input.is_action_just_pressed("jump") and current_jump_times > 0:
 					velocity.y = JUMP_VELOCITY
-			current_dash_times = INITIAL_DASH_TIMES
+					current_jump_times -= 1
 			if direction:
 				animation.play("run")
 			else:
 				animation.play("idle")
+		else:
+			if Input.is_action_just_pressed("jump") and current_jump_times > 0 and GameManager.acuired_double_jump:
+				velocity.y = JUMP_VELOCITY
+				current_jump_times -= 1
 					
 		if GameManager.acuired_wall_jump:
 			if is_on_floor() or wall_contact_coyote > 0.0:
+				current_jump_times = initial_jump_times
 				current_dash_times = INITIAL_DASH_TIMES
 				if Input.is_action_just_pressed("jump"):
 					velocity.y = JUMP_VELOCITY
+					current_jump_times -= 1
 					if wall_contact_coyote > 0.0:
 						velocity.x = x_input * WALL_JUMP_FORCE
 				
