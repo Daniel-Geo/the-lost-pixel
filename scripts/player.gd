@@ -7,15 +7,14 @@ const DASH_SPEED: float = 500.0
 const INITIAL_DASH_TIMES: int = 1
 const ACCELERATION: float = 18.5
 const FRICTION:float = 22.5
-const GRAVITY_WALL: float = 100.0
-const WALL_JUMP_FORCE: float = 200.0
+const WALL_GRAVITY: float = 100.0
 
 var current_dash_times: int = INITIAL_DASH_TIMES
 var is_dashing := false
 var in_dash_cooldown := false
 var in_spell_cooldown := false
-var initial_jump_times := 2
-var current_jump_times: int = initial_jump_times
+var initial_extra_jumps := 1
+var current_extra_jumps: int = initial_extra_jumps
 var look_dir_x: int = 1
 
 const WALL_CONTACT_COYOTE_TIME: float = 0.1
@@ -23,8 +22,11 @@ var wall_contact_coyote: float = 0.0
 
 
 @onready var animation: AnimatedSprite2D = $AnimatedSprite2D
+@onready var jump_sfx: AudioStreamPlayer = $JumpSFX
 @onready var explosion_particles: CPUParticles2D = $Explosion
 @onready var dash_particles: CPUParticles2D = $Dash
+@onready var walking_particles: CPUParticles2D = $WalkingParticles
+@onready var jumping_particles: CPUParticles2D = $JumpingParticles
 @onready var spell_sfx: AudioStreamPlayer = $SpellSFX
 @onready var spell_cooldown: Timer = $SpellCooldown
 @onready var dash_timer: Timer = $DashTimer
@@ -52,38 +54,45 @@ func _physics_process(delta: float) -> void:
 			velocity.x = move_toward(velocity.x, 0, SPEED) 
 		
 		if is_on_floor():
-			if Input.is_action_just_pressed("jump") and current_jump_times > 0:
+			current_dash_times = INITIAL_DASH_TIMES
+			current_extra_jumps = initial_extra_jumps
+			if Input.is_action_just_pressed("jump"):
 					velocity.y = JUMP_VELOCITY
-					current_jump_times -= 1
+					jumping_particles.emitting = true
+					jump_sfx.play()
 			if direction:
 				animation.play("run")
+				walking_particles.emitting = true
 			else:
 				animation.play("idle")
+				walking_particles.emitting = false
+				
+			if Input.is_action_just_pressed("down") and GameManager.acuired_drop_through_platform:
+				set_collision_mask_value(5, false)
+				await get_tree().create_timer(0.1).timeout
+				set_collision_mask_value(5, true)
 		else:
-			if Input.is_action_just_pressed("jump") and current_jump_times > 0 and GameManager.acuired_double_jump:
+			walking_particles.emitting = false
+			if Input.is_action_just_pressed("jump") and !is_on_wall() and current_extra_jumps > 0 and GameManager.acuired_double_jump:
 				velocity.y = JUMP_VELOCITY
-				current_jump_times -= 1
-					
+				jumping_particles.emitting = true
+				jump_sfx.play()
+				current_extra_jumps -= 1
+				
 		if GameManager.acuired_wall_jump:
-			if is_on_floor() or wall_contact_coyote > 0.0:
-				current_jump_times = initial_jump_times
+			if is_on_wall():
+				current_extra_jumps = initial_extra_jumps
 				current_dash_times = INITIAL_DASH_TIMES
-				if Input.is_action_just_pressed("jump"):
+				if Input.is_action_just_pressed("jump") and wall_contact_coyote > 0.0:
 					velocity.y = JUMP_VELOCITY
-					current_jump_times -= 1
-					if wall_contact_coyote > 0.0:
-						velocity.x = x_input * WALL_JUMP_FORCE
-				
-				if direction:
-					animation.play("run")
-				else:
-					animation.play("idle")
+					jump_sfx.play()
 					
-				
 			if !is_on_floor() and velocity.y > 0 and is_on_wall() and velocity.x != 0:
+				current_extra_jumps = initial_extra_jumps
 				look_dir_x = sign(velocity.x)
+				animation.play("wall_slide")
 				wall_contact_coyote = WALL_CONTACT_COYOTE_TIME
-				velocity.y = GRAVITY_WALL
+				velocity.y = WALL_GRAVITY
 			else:
 				wall_contact_coyote -= delta
 			
@@ -117,7 +126,6 @@ func use_spell():
 			new_projectile.rotation = PI
 		add_child(new_projectile)
 		spell_sfx.play()
-
 
 func dash():
 	current_dash_times -= 1

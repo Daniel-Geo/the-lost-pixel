@@ -1067,11 +1067,10 @@ position = Vector2(0, 128)
 shape = SubResource("WorldBoundaryShape2D_5bvhu")
 
 [node name="Key" parent="." instance=ExtResource("5_e4ab4")]
-position = Vector2(16, -4)
-req_coins = 3
+position = Vector2(40, -8)
 
 [node name="Treasure" parent="." instance=ExtResource("6_xxvx7")]
-position = Vector2(-16, -4)
+position = Vector2(-40, -8)
 next_scene = "main_menu"
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

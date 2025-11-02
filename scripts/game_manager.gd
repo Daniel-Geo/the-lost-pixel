@@ -6,6 +6,7 @@ var acuired_spell := false
 var acuired_dash := false
 var acuired_wall_jump := false
 var acuired_double_jump := false
+var acuired_drop_through_platform := true
 
 @onready var score_label: Label = %ScoreLabel
 @onready var back_button: Button = %BackButton
