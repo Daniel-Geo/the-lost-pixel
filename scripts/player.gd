@@ -1,4 +1,4 @@
-extends CharacterBody2D
+class_name Player extends CharacterBody2D
 
 
 const SPEED: float = 150.0
@@ -17,7 +17,7 @@ var initial_extra_jumps := 1
 var current_extra_jumps: int = initial_extra_jumps
 var look_dir_x: int = 1
 
-const WALL_CONTACT_COYOTE_TIME: float = 0.1
+const WALL_CONTACT_COYOTE_TIME: float = 0.2
 var wall_contact_coyote: float = 0.0
 
 
@@ -68,9 +68,7 @@ func _physics_process(delta: float) -> void:
 				walking_particles.emitting = false
 				
 			if Input.is_action_just_pressed("down") and GameManager.acuired_drop_through_platform:
-				set_collision_mask_value(5, false)
-				await get_tree().create_timer(0.1).timeout
-				set_collision_mask_value(5, true)
+				position.y += 1
 		else:
 			walking_particles.emitting = false
 			if Input.is_action_just_pressed("jump") and !is_on_wall() and current_extra_jumps > 0 and GameManager.acuired_double_jump:

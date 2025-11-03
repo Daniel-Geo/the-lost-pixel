@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dny3x5vsrdqg0"]
+
+[ext_resource type="Script" uid="uid://cdfaididobng3" path="res://scripts/hidden_area.gd" id="1_qlj7p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f7021"]
+
+[node name="HiddenArea" type="Area2D"]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_qlj7p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.75, 0.75)
+shape = SubResource("RectangleShape2D_f7021")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

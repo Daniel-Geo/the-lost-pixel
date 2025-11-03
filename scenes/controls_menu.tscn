@@ -166,7 +166,7 @@ theme_override_constants/line_spacing = 30
 theme_override_fonts/font = ExtResource("2_d0u3u")
 theme_override_font_sizes/font_size = 32
 text = "Move with A & D keys or the left & right arrow keys
-Jump with W key, up arrow key, and the space key
+Jump with W key, up arrow key, or the space key
 "
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -179,9 +179,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -628.0
-offset_top = -33.0
+offset_top = -58.0
 offset_right = 628.0
-offset_bottom = 61.0
+offset_bottom = 36.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/line_spacing = 30
@@ -200,9 +200,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -628.0
-offset_top = 161.0
+offset_top = 122.0
 offset_right = 628.0
-offset_bottom = 193.0
+offset_bottom = 154.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/line_spacing = 30
@@ -220,15 +220,35 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -628.0
-offset_top = -129.0
+offset_top = -193.0
 offset_right = 628.0
-offset_bottom = -97.0
+offset_bottom = -161.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/line_spacing = 30
 theme_override_fonts/font = ExtResource("2_d0u3u")
 theme_override_font_sizes/font_size = 32
 text = "Wall jump after accuiring it in level 4"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DoubleJumpLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -628.0
+offset_top = -152.0
+offset_right = 628.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/line_spacing = 30
+theme_override_fonts/font = ExtResource("2_d0u3u")
+theme_override_font_sizes/font_size = 32
+text = "Double jump after accuiring it in level 5"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -272,11 +292,13 @@ metadata/_edit_use_anchors_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VBoxContainer"]
 texture_filter = 1
-position = Vector2(136, 238)
+position = Vector2(136, 228)
 scale = Vector2(10, 10)
 sprite_frames = SubResource("SpriteFrames_hy8xy")
 animation = &"run"
 autoplay = "run"
+frame = 1
+frame_progress = 0.973012
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="VBoxContainer"]
 texture_filter = 1
@@ -299,12 +321,12 @@ scale_amount_max = 5.0
 scale_amount_curve = SubResource("Curve_8jatx")
 
 [node name="Sprite2D" type="Sprite2D" parent="VBoxContainer"]
-position = Vector2(131, 475)
+position = Vector2(131, 440)
 scale = Vector2(5, 5)
 texture = ExtResource("6_2q5co")
 
 [node name="Flame" type="CPUParticles2D" parent="VBoxContainer/Sprite2D"]
-position = Vector2(-3, 0)
+position = Vector2(-6, 0)
 scale = Vector2(2, 2)
 amount = 10000
 lifetime = 0.5

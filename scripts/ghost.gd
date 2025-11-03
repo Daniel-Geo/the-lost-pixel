@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 
-const SPEED := 40
+const SPEED := 80
 
 @export var player: Node2D
 @onready var sprite: Sprite2D = $Sprite2D

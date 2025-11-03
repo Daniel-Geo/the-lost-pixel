@@ -4,6 +4,8 @@ var scene
 var past_scene
 
 @onready var game_music: AudioStreamPlayer = $GameMusic
+@onready var level_4_music: AudioStreamPlayer = $Level4Music
+@onready var level_5_music: AudioStreamPlayer = $Level5Music
 @onready var menu_music: AudioStreamPlayer = $MenuMusic
 
 func _process(delta: float) -> void:
@@ -39,12 +41,12 @@ func change_music():
 		
 	elif scene == "Level4" and past_scene != "Level4":
 		stop_all_audio()
-		game_music.play()
+		level_4_music.play()
 		past_scene = "Level4"
 		
 	elif scene == "Level5" and past_scene != "Level5":
 		stop_all_audio()
-		game_music.play()
+		level_5_music.play()
 		past_scene = "Level5"
 		
 func stop_all_audio():
