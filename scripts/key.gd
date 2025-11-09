@@ -10,8 +10,9 @@ func _ready() -> void:
 to buy the key"
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	if game_manager.score >= req_coins:
-		game_manager.has_key = true
-		queue_free()
-	else:
-		key_label.show()
+	if body is Player:
+		if game_manager.score >= req_coins:
+			game_manager.has_key = true
+			queue_free()
+		else:
+			key_label.show()

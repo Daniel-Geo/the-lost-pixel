@@ -10,23 +10,24 @@ extends Node2D
 @export var next_scene:String
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	if game_manager.has_key:
-		var music_bus_index = AudioServer.get_bus_index("Music")
-		AudioServer.set_bus_mute(music_bus_index, true)
-		var sfx_bus_index = AudioServer.get_bus_index("SFX")
-		AudioServer.set_bus_volume_db(sfx_bus_index, 12)
-		
-		collision_shape_2d.queue_free()
-		lose_label.hide()
-		win_label.show()
-		animation.play("opened")
-		audio_player.play()
-		Engine.time_scale = 0.5
-		await get_tree().create_timer(2).timeout
-		Engine.time_scale = 1
-		AudioServer.set_bus_mute(music_bus_index, false)
-		AudioServer.set_bus_volume_db(sfx_bus_index, 6)
-		get_tree().change_scene_to_file("res://scenes/" + next_scene + ".tscn")
-				
-	else:
-		lose_label.show()
+	if body is Player:
+		if game_manager.has_key:
+			var music_bus_index = AudioServer.get_bus_index("Music")
+			AudioServer.set_bus_mute(music_bus_index, true)
+			var sfx_bus_index = AudioServer.get_bus_index("SFX")
+			AudioServer.set_bus_volume_db(sfx_bus_index, 12)
+			
+			collision_shape_2d.queue_free()
+			lose_label.hide()
+			win_label.show()
+			animation.play("opened")
+			audio_player.play()
+			Engine.time_scale = 0.5
+			await get_tree().create_timer(2).timeout
+			Engine.time_scale = 1
+			AudioServer.set_bus_mute(music_bus_index, false)
+			AudioServer.set_bus_volume_db(sfx_bus_index, 6)
+			get_tree().change_scene_to_file("res://scenes/" + next_scene + ".tscn")
+					
+		else:
+			lose_label.show()

@@ -85,7 +85,7 @@ offset_right = 254.0
 offset_bottom = 26.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 50
+theme_override_constants/separation = 30
 
 [node name="Level1Button" type="Button" parent="HBoxContainer"]
 clip_contents = true
@@ -149,6 +149,18 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_y0kpc")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ktp5v")
 text = "Level 5"
 
+[node name="Level6Button" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_5vuwt")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxFlat_8gkdn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xc0ai")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_y0kpc")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ktp5v")
+text = "Level 6"
+
 [node name="BackButton" type="Button" parent="."]
 layout_mode = 1
 anchors_preset = 7
@@ -172,9 +184,30 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_idal5")
 theme_override_styles/normal = SubResource("StyleBoxFlat_oegyn")
 text = "Back"
 
+[node name="InDevLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 425.0
+offset_top = -415.0
+offset_right = 609.0
+offset_bottom = -383.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/line_spacing = 30
+theme_override_fonts/font = ExtResource("2_5vuwt")
+theme_override_font_sizes/font_size = 16
+text = "In Development"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="pressed" from="HBoxContainer/Level1Button" to="." method="_on_level_1_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/Level2Button" to="." method="_on_level_2_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/Level3Button" to="." method="_on_level_3_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/Level4Button" to="." method="_on_level_4_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/Level5Button" to="." method="_on_level_5_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/Level6Button" to="." method="_on_level_6_button_pressed"]
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

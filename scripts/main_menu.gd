@@ -12,5 +12,9 @@ func _on_levels_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/levels_menu.tscn")
 
 
+func _on_editor_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/level_editor.tscn")
+
+
 func _on_quit_button_pressed() -> void:
 	get_tree().quit()

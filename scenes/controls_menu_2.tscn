@@ -1,0 +1,154 @@
+[gd_scene load_steps=10 format=3 uid="uid://i6cl73nxtg8h"]
+
+[ext_resource type="Texture2D" uid="uid://didp8hvt4u06f" path="res://assets/background.png" id="1_rcrqh"]
+[ext_resource type="Script" uid="uid://bdvdpjwgvy3uk" path="res://scripts/controls_menu_2.gd" id="1_vpkis"]
+[ext_resource type="FontFile" uid="uid://dye1loha3isvx" path="res://fonts/PixelOperator8-Bold.ttf" id="2_vpkis"]
+[ext_resource type="FontFile" uid="uid://basqycvpfvco2" path="res://fonts/PixelOperator8.ttf" id="3_fna5x"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_molnt"]
+texture = ExtResource("1_rcrqh")
+modulate_color = Color(1, 1, 1, 0.333333)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eyv06"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jkktu"]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hbgvm"]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jjqla"]
+content_margin_top = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(1, 1, 1, 1)
+
+[node name="ControlsMenu2" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vpkis")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_molnt")
+
+[node name="MainLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -244.0
+offset_top = 10.0
+offset_right = 244.0
+offset_bottom = 74.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_vpkis")
+theme_override_font_sizes/font_size = 64
+text = "Level Editor"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CameraMovement" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -628.0
+offset_top = -166.0
+offset_right = 628.0
+offset_bottom = -134.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/line_spacing = 30
+theme_override_fonts/font = ExtResource("3_fna5x")
+theme_override_font_sizes/font_size = 32
+text = "Move the camera using WASD or the arrow keys"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TilePlacement" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -628.0
+offset_top = -17.0
+offset_right = 628.0
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/line_spacing = 30
+theme_override_fonts/font = ExtResource("3_fna5x")
+theme_override_font_sizes/font_size = 32
+text = "Left click on a tile to duplicate it, then click again anywhere to place that tile"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="TileErasement" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -628.0
+offset_top = 173.0
+offset_right = 628.0
+offset_bottom = 267.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/line_spacing = 30
+theme_override_fonts/font = ExtResource("3_fna5x")
+theme_override_font_sizes/font_size = 32
+text = "Right click on a tile to erase it"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -174.0
+offset_top = -75.0
+offset_right = 174.0
+offset_bottom = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_fna5x")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxFlat_eyv06")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jkktu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hbgvm")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jjqla")
+text = "Back"
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://ducmh1omynoi"]
+
+[ext_resource type="Script" uid="uid://cyrcjko3n442q" path="res://scripts/tile_being_moved.gd" id="1_6kf1c"]
+
+[node name="TileBeingMoved" type="Sprite2D"]
+z_index = 1000
+script = ExtResource("1_6kf1c")

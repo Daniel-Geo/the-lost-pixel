@@ -6,6 +6,7 @@ var past_scene
 @onready var game_music: AudioStreamPlayer = $GameMusic
 @onready var level_4_music: AudioStreamPlayer = $Level4Music
 @onready var level_5_music: AudioStreamPlayer = $Level5Music
+@onready var editor_music: AudioStreamPlayer = $EditorMusic
 @onready var menu_music: AudioStreamPlayer = $MenuMusic
 
 func _process(delta: float) -> void:
@@ -48,6 +49,16 @@ func change_music():
 		stop_all_audio()
 		level_5_music.play()
 		past_scene = "Level5"
+		
+	elif scene == "Level6" and past_scene != "Level6":
+		stop_all_audio()
+		game_music.play()
+		past_scene = "Level6"
+		
+	elif scene == "LevelEditor" and past_scene != "LevelEditor":
+		stop_all_audio()
+		editor_music.play()
+		past_scene = "LevelEditor"
 		
 func stop_all_audio():
 	for node in get_tree().get_nodes_in_group("Music"):
