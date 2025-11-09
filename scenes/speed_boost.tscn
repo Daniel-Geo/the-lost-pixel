@@ -1,11 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://liuv47gw6dw8"]
+[gd_scene load_steps=8 format=3 uid="uid://b2qw8xkntbknn"]
 
-[ext_resource type="Script" uid="uid://co2aik6l8p067" path="res://scripts/coin.gd" id="1_11l1o"]
-[ext_resource type="Texture2D" uid="uid://cdpin830d8ydf" path="res://assets/monochrome_tilemap_transparent_packed.png" id="2_d14el"]
-[ext_resource type="AudioStream" uid="uid://dvua4pp0i876y" path="res://sfx/coin.mp3" id="3_1ikuy"]
+[ext_resource type="Script" uid="uid://d33a42tovsu6c" path="res://scripts/speed_boost.gd" id="1_rmo5g"]
+[ext_resource type="Texture2D" uid="uid://bgppa18ed12nj" path="res://assets/speed_boost.png" id="2_miigo"]
+[ext_resource type="AudioStream" uid="uid://b1x822v068yv5" path="res://sfx/retro-power-up.wav" id="3_miigo"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_wnlwo"]
-radius = 5.38516
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4k7nx"]
+size = Vector2(14, 14)
 
 [sub_resource type="Animation" id="Animation_xmuha"]
 length = 0.001
@@ -24,7 +24,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AudioStreamPlayer2D:playing")
+tracks/1/path = NodePath("Area2D/CollisionShape2D:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -36,11 +36,11 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Area2D/CollisionShape2D:disabled")
+tracks/2/path = NodePath("AudioStreamPlayer:playing")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.001),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
@@ -63,7 +63,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("AudioStreamPlayer2D:playing")
+tracks/1/path = NodePath("Area2D/CollisionShape2D:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -72,27 +72,13 @@ tracks/1/keys = {
 "update": 1,
 "values": [true]
 }
-tracks/2/type = "method"
+tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath(".")
+tracks/2/path = NodePath("AudioStreamPlayer:playing")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"queue_free"
-}]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Area2D/CollisionShape2D:disabled")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -105,27 +91,25 @@ _data = {
 &"collect": SubResource("Animation_jig8b")
 }
 
-[node name="Coin" type="Node2D"]
-script = ExtResource("1_11l1o")
+[node name="SpeedBoost" type="Node2D"]
+script = ExtResource("1_rmo5g")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_d14el")
-region_enabled = true
-region_rect = Rect2(32, 0, 16, 16)
-
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("3_1ikuy")
-bus = &"SFX"
+texture = ExtResource("2_miigo")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("CircleShape2D_wnlwo")
+shape = SubResource("RectangleShape2D_4k7nx")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_kfxoj")
 }
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_miigo")
+volume_db = 1.0
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

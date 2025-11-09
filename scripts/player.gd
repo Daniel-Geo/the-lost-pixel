@@ -1,7 +1,7 @@
 class_name Player extends CharacterBody2D
 
 
-const SPEED: float = 150.0
+var speed: float = 150.0
 const JUMP_VELOCITY: float = -300.0
 const DASH_SPEED: float = 500.0
 const INITIAL_DASH_TIMES: int = 1
@@ -36,8 +36,6 @@ func _ready() -> void:
 	Engine.time_scale = 1.0
 
 func _physics_process(delta: float) -> void:
-	var x_input: float = Input.get_action_strength("right") - Input.get_action_strength("left")
-	
 	if !is_dashing:
 		if  !is_on_floor():
 			velocity += get_gravity() * delta
@@ -45,13 +43,13 @@ func _physics_process(delta: float) -> void:
 
 		var direction := Input.get_axis("left", "right")
 		if direction:
-			velocity.x = direction * SPEED
+			velocity.x = direction * speed
 			if direction == 1:
 				animation.flip_h = false
 			elif direction == -1:
 				animation.flip_h = true
 		else:
-			velocity.x = move_toward(velocity.x, 0, SPEED) 
+			velocity.x = move_toward(velocity.x, 0, speed) 
 		
 		if is_on_floor():
 			current_dash_times = INITIAL_DASH_TIMES
@@ -103,6 +101,7 @@ func _physics_process(delta: float) -> void:
 			velocity.x = -1 * DASH_SPEED
 		
 	move_and_slide()
+	
 	
 	if Input.is_action_just_pressed("use_spell") and !in_spell_cooldown and GameManager.acuired_spell:
 		use_spell()
