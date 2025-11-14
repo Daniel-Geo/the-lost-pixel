@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ri1sx6duqljl"]
+[gd_scene load_steps=8 format=3 uid="uid://ri1sx6duqljl"]
 
 [ext_resource type="AudioStream" uid="uid://djyiv0cabhvk0" path="res://music/exploration.ogg" id="1_05ggv"]
 [ext_resource type="Script" uid="uid://h0ktayyknt28" path="res://scripts/music.gd" id="1_qnihg"]
@@ -6,9 +6,19 @@
 [ext_resource type="AudioStream" uid="uid://dil6xuqqphqsx" path="res://music/going-up.ogg" id="3_wia2r"]
 [ext_resource type="AudioStream" uid="uid://c2huhl0i6bmlh" path="res://music/editor-music.ogg" id="4_keplp"]
 [ext_resource type="AudioStream" uid="uid://b58cx3a4ola6v" path="res://music/dark-happy-world.ogg" id="4_mobtd"]
+[ext_resource type="AudioStream" uid="uid://b1lwq7v0p58n4" path="res://music/synthwave-palms.ogg" id="7_keplp"]
 
 [node name="Music" type="Node"]
 script = ExtResource("1_qnihg")
+
+[node name="MenuMusic" type="AudioStreamPlayer" parent="." groups=["Music"]]
+stream = ExtResource("3_ejojg")
+bus = &"Music"
+
+[node name="EditorMusic" type="AudioStreamPlayer" parent="." groups=["Music"]]
+stream = ExtResource("4_keplp")
+volume_db = 6.0
+bus = &"Music"
 
 [node name="GameMusic" type="AudioStreamPlayer" parent="." groups=["Music"]]
 stream = ExtResource("1_05ggv")
@@ -19,16 +29,11 @@ stream = ExtResource("3_wia2r")
 volume_db = 6.0
 bus = &"Music"
 
-[node name="EditorMusic" type="AudioStreamPlayer" parent="." groups=["Music"]]
-stream = ExtResource("4_keplp")
-volume_db = 6.0
-bus = &"Music"
-
 [node name="Level5Music" type="AudioStreamPlayer" parent="." groups=["Music"]]
 stream = ExtResource("4_mobtd")
 volume_db = -3.0
 bus = &"Music"
 
-[node name="MenuMusic" type="AudioStreamPlayer" parent="." groups=["Music"]]
-stream = ExtResource("3_ejojg")
+[node name="Level6Music" type="AudioStreamPlayer" parent="." groups=["Music"]]
+stream = ExtResource("7_keplp")
 bus = &"Music"

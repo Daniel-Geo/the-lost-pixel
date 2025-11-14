@@ -58,9 +58,12 @@ func _physics_process(delta: float) -> void:
 			current_dash_times = INITIAL_DASH_TIMES
 			current_extra_jumps = initial_extra_jumps
 			if Input.is_action_just_pressed("jump"):
-				velocity.y = jump_velocity
-				jumping_particles.emitting = true
-				jump_sfx.play()
+				if GameManager.acquired_flip_jump:
+					flip()
+				else:
+					velocity.y = jump_velocity
+					jumping_particles.emitting = true
+					jump_sfx.play()
 			
 			if direction:
 				animation.play("run")
@@ -70,7 +73,10 @@ func _physics_process(delta: float) -> void:
 				walking_particles.emitting = false
 				
 			if Input.is_action_just_pressed("down") and GameManager.acquired_drop_through_platform:
-				position.y += 1
+				if is_flipped:
+					position.y -= 1
+				else:
+					position.y += 1
 		else:
 			walking_particles.emitting = false
 			if Input.is_action_just_pressed("jump") and !is_on_wall() and current_extra_jumps > 0 and GameManager.acquired_double_jump:
@@ -118,11 +124,8 @@ func _physics_process(delta: float) -> void:
 		dash_cooldown.start()
 		
 	if Input.is_action_just_pressed("flip") and is_on_floor() and GameManager.acquired_flip:
-		jump_velocity *= -1
-		wall_gravity *= -1
-		scale.y *= -1
 		flip()
-		is_flipped = !is_flipped
+		
 		
 func use_spell():
 	if has_node("CollisionShape2D"):
@@ -136,18 +139,23 @@ func use_spell():
 		spell_sfx.play()
 
 func dash():
-	current_dash_times -= 1
-	is_dashing = true
-	dash_particles.emitting = true
-	dash_timer.start()
+	if has_node("CollisionShape2D"):
+		current_dash_times -= 1
+		is_dashing = true
+		dash_particles.emitting = true
+		dash_timer.start()
 	
 func flip():
+	jump_velocity *= -1
+	wall_gravity *= -1
+	scale.y *= -1
 	if is_flipped:
 		PhysicsServer2D.area_set_param(get_viewport().find_world_2d().space, PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR, Vector2.DOWN)
 		up_direction = Vector2.UP
 	else:
 		PhysicsServer2D.area_set_param(get_viewport().find_world_2d().space, PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR, Vector2.UP)
 		up_direction = Vector2.DOWN
+	is_flipped = !is_flipped
 
 func _on_kill_timer_timeout() -> void:
 	Engine.time_scale = 1.0

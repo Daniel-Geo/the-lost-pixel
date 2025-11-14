@@ -6,6 +6,7 @@ var past_scene
 @onready var game_music: AudioStreamPlayer = $GameMusic
 @onready var level_4_music: AudioStreamPlayer = $Level4Music
 @onready var level_5_music: AudioStreamPlayer = $Level5Music
+@onready var level_6_music: AudioStreamPlayer = $Level6Music
 @onready var editor_music: AudioStreamPlayer = $EditorMusic
 @onready var menu_music: AudioStreamPlayer = $MenuMusic
 
@@ -24,6 +25,11 @@ func change_music():
 		stop_all_audio()
 		menu_music.play()
 		past_scene = "ControlMenu"
+		
+	elif scene == "LevelEditor" and past_scene != "LevelEditor":
+		stop_all_audio()
+		editor_music.play()
+		past_scene = "LevelEditor"
 		
 	elif scene == "Level1" and past_scene != "Level1":
 		stop_all_audio()
@@ -52,13 +58,8 @@ func change_music():
 		
 	elif scene == "Level6" and past_scene != "Level6":
 		stop_all_audio()
-		game_music.play()
+		level_6_music.play()
 		past_scene = "Level6"
-		
-	elif scene == "LevelEditor" and past_scene != "LevelEditor":
-		stop_all_audio()
-		editor_music.play()
-		past_scene = "LevelEditor"
 		
 func stop_all_audio():
 	for node in get_tree().get_nodes_in_group("Music"):
