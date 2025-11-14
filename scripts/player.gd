@@ -2,20 +2,21 @@ class_name Player extends CharacterBody2D
 
 
 var speed: float = 150.0
-const JUMP_VELOCITY: float = -300.0
+var jump_velocity: float = -300.0
+var wall_gravity: float = 100.0
+
 const DASH_SPEED: float = 500.0
 const INITIAL_DASH_TIMES: int = 1
 const ACCELERATION: float = 18.5
-const FRICTION:float = 22.5
-const WALL_GRAVITY: float = 100.0
 
+var in_spell_cooldown := false
 var current_dash_times: int = INITIAL_DASH_TIMES
 var is_dashing := false
 var in_dash_cooldown := false
-var in_spell_cooldown := false
 var initial_extra_jumps := 1
 var current_extra_jumps: int = initial_extra_jumps
 var look_dir_x: int = 1
+var is_flipped := false
 
 const WALL_CONTACT_COYOTE_TIME: float = 0.2
 var wall_contact_coyote: float = 0.0
@@ -34,13 +35,15 @@ var wall_contact_coyote: float = 0.0
 
 func _ready() -> void:
 	Engine.time_scale = 1.0
+	up_direction = Vector2.UP
+	PhysicsServer2D.area_set_param(get_viewport().find_world_2d().space, PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR, Vector2.DOWN)
 
 func _physics_process(delta: float) -> void:
 	if !is_dashing:
 		if  !is_on_floor():
 			velocity += get_gravity() * delta
 			animation.play("jump")
-
+			
 		var direction := Input.get_axis("left", "right")
 		if direction:
 			velocity.x = direction * speed
@@ -55,9 +58,10 @@ func _physics_process(delta: float) -> void:
 			current_dash_times = INITIAL_DASH_TIMES
 			current_extra_jumps = initial_extra_jumps
 			if Input.is_action_just_pressed("jump"):
-					velocity.y = JUMP_VELOCITY
-					jumping_particles.emitting = true
-					jump_sfx.play()
+				velocity.y = jump_velocity
+				jumping_particles.emitting = true
+				jump_sfx.play()
+			
 			if direction:
 				animation.play("run")
 				walking_particles.emitting = true
@@ -65,30 +69,30 @@ func _physics_process(delta: float) -> void:
 				animation.play("idle")
 				walking_particles.emitting = false
 				
-			if Input.is_action_just_pressed("down") and GameManager.acuired_drop_through_platform:
+			if Input.is_action_just_pressed("down") and GameManager.acquired_drop_through_platform:
 				position.y += 1
 		else:
 			walking_particles.emitting = false
-			if Input.is_action_just_pressed("jump") and !is_on_wall() and current_extra_jumps > 0 and GameManager.acuired_double_jump:
-				velocity.y = JUMP_VELOCITY
+			if Input.is_action_just_pressed("jump") and !is_on_wall() and current_extra_jumps > 0 and GameManager.acquired_double_jump:
+				velocity.y = jump_velocity
 				jumping_particles.emitting = true
 				jump_sfx.play()
 				current_extra_jumps -= 1
 				
-		if GameManager.acuired_wall_jump:
+		if GameManager.acquired_wall_jump:
 			if is_on_wall():
 				current_extra_jumps = initial_extra_jumps
 				current_dash_times = INITIAL_DASH_TIMES
 				if Input.is_action_just_pressed("jump") and wall_contact_coyote > 0.0:
-					velocity.y = JUMP_VELOCITY
+					velocity.y = jump_velocity
 					jump_sfx.play()
 					
-			if !is_on_floor() and velocity.y > 0 and is_on_wall() and velocity.x != 0:
+			if (!is_on_floor() and velocity.y > 0 and is_on_wall() and velocity.x != 0 and !is_flipped) or (!is_on_floor() and velocity.y < 0 and is_on_wall() and velocity.x != 0 and is_flipped):
 				current_extra_jumps = initial_extra_jumps
 				look_dir_x = sign(velocity.x)
 				animation.play("wall_slide")
 				wall_contact_coyote = WALL_CONTACT_COYOTE_TIME
-				velocity.y = WALL_GRAVITY
+				velocity.y = wall_gravity
 			else:
 				wall_contact_coyote -= delta
 			
@@ -103,16 +107,23 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 	
-	if Input.is_action_just_pressed("use_spell") and !in_spell_cooldown and GameManager.acuired_spell:
+	if Input.is_action_just_pressed("use_spell") and !in_spell_cooldown and GameManager.acquired_spell:
 		use_spell()
 		in_spell_cooldown = true
 		spell_cooldown.start()
 		
-	if Input.is_action_just_pressed("dash") and current_dash_times > 0 and !is_dashing and !in_dash_cooldown and GameManager.acuired_dash:
+	if Input.is_action_just_pressed("dash") and current_dash_times > 0 and !is_dashing and !in_dash_cooldown and GameManager.acquired_dash:
 		dash()
 		in_dash_cooldown = true
 		dash_cooldown.start()
-
+		
+	if Input.is_action_just_pressed("flip") and is_on_floor() and GameManager.acquired_flip:
+		jump_velocity *= -1
+		wall_gravity *= -1
+		scale.y *= -1
+		flip()
+		is_flipped = !is_flipped
+		
 func use_spell():
 	if has_node("CollisionShape2D"):
 		const PROJECTILE = preload("res://scenes/soul_spell_projectile.tscn")
@@ -129,6 +140,14 @@ func dash():
 	is_dashing = true
 	dash_particles.emitting = true
 	dash_timer.start()
+	
+func flip():
+	if is_flipped:
+		PhysicsServer2D.area_set_param(get_viewport().find_world_2d().space, PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR, Vector2.DOWN)
+		up_direction = Vector2.UP
+	else:
+		PhysicsServer2D.area_set_param(get_viewport().find_world_2d().space, PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR, Vector2.UP)
+		up_direction = Vector2.DOWN
 
 func _on_kill_timer_timeout() -> void:
 	Engine.time_scale = 1.0

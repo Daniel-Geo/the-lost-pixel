@@ -2,11 +2,12 @@ extends Node2D
 
 var score: int = 0
 var has_key := false
-var acuired_spell := false
-var acuired_dash := false
-var acuired_wall_jump := false
-var acuired_double_jump := false
-var acuired_drop_through_platform := true
+var acquired_spell := false
+var acquired_dash := false
+var acquired_wall_jump := false
+var acquired_double_jump := false
+var acquired_drop_through_platform := true
+var acquired_flip := false
 
 @onready var score_label: Label = %ScoreLabel
 @onready var back_button: Button = %BackButton
@@ -14,28 +15,36 @@ var acuired_drop_through_platform := true
 func _ready() -> void:
 	if get_tree().current_scene:
 		if get_tree().current_scene.name == "Level4" or get_tree().current_scene.name == "Level5" or get_tree().current_scene.name == "Level6":
-			GameManager.acuired_wall_jump = true
+			GameManager.acquired_wall_jump = true
 		if get_tree().current_scene.name == "Level3" or get_tree().current_scene.name == "Level4" or get_tree().current_scene.name == "Level5" or get_tree().current_scene.name == "Level6":
-			GameManager.acuired_dash = true
+			GameManager.acquired_dash = true
 		if get_tree().current_scene.name == "Level2" or get_tree().current_scene.name == "Level3" or get_tree().current_scene.name == "Level4" or get_tree().current_scene.name == "Level5" or get_tree().current_scene.name == "Level6":
-			GameManager.acuired_spell = true
+			GameManager.acquired_spell = true
 		if get_tree().current_scene.name == "Level5" or get_tree().current_scene.name == "Level6":
-			GameManager.acuired_double_jump = true
+			GameManager.acquired_double_jump = true
+		if get_tree().current_scene.name == "Level6":
+			GameManager.acquired_flip = true
+		if get_tree().current_scene.name == "Level5":
+			GameManager.acquired_flip = false
 		if get_tree().current_scene.name == "Level4":
-			GameManager.acuired_double_jump = true
-			GameManager.acuired_double_jump = false
+			GameManager.acquired_double_jump = true
+			GameManager.acquired_double_jump = false
+			GameManager.acquired_flip = false
 		if get_tree().current_scene.name == "Level3":
-			GameManager.acuired_wall_jump = false
-			GameManager.acuired_double_jump = false
+			GameManager.acquired_wall_jump = false
+			GameManager.acquired_double_jump = false
+			GameManager.acquired_flip = false
 		if get_tree().current_scene.name == "Level2":
-			GameManager.acuired_dash = false
-			GameManager.acuired_wall_jump = false
-			GameManager.acuired_double_jump = false
+			GameManager.acquired_dash = false
+			GameManager.acquired_wall_jump = false
+			GameManager.acquired_double_jump = false
+			GameManager.acquired_flip = false
 		if get_tree().current_scene.name == "Level1":
-			GameManager.acuired_spell = false
-			GameManager.acuired_dash = false
-			GameManager.acuired_wall_jump = false
-			GameManager.acuired_double_jump = false
+			GameManager.acquired_spell = false
+			GameManager.acquired_dash = false
+			GameManager.acquired_wall_jump = false
+			GameManager.acquired_double_jump = false
+			GameManager.acquired_flip = false
 
 func add_point():
 	score += 1

@@ -117,13 +117,13 @@ texture_filter = 1
 position = Vector2(0, -4)
 sprite_frames = SubResource("SpriteFrames_y4r1p")
 animation = &"idle"
+frame_progress = 0.69604
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_qhqgy")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, -4)
 zoom = Vector2(5, 5)
 limit_bottom = 128
 drag_left_margin = 0.1
