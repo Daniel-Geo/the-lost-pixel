@@ -1585,7 +1585,7 @@ req_coins = 3
 
 [node name="Treasure" parent="." instance=ExtResource("6_xxvx7")]
 position = Vector2(504, -568)
-next_scene = "main_menu"
+next_scene = "level_6"
 
 [node name="Enemy" parent="." instance=ExtResource("9_e4ab4")]
 position = Vector2(344, 40)

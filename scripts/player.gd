@@ -16,7 +16,8 @@ var in_dash_cooldown := false
 var initial_extra_jumps := 1
 var current_extra_jumps: int = initial_extra_jumps
 var look_dir_x: int = 1
-var is_flipped := false
+var is_player_flipped:= false
+var is_gravity_flipped := false
 
 const WALL_CONTACT_COYOTE_TIME: float = 0.2
 var wall_contact_coyote: float = 0.0
@@ -37,12 +38,18 @@ func _ready() -> void:
 	Engine.time_scale = 1.0
 	up_direction = Vector2.UP
 	PhysicsServer2D.area_set_param(get_viewport().find_world_2d().space, PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR, Vector2.DOWN)
+	if get_tree().current_scene.name == "Level6":
+		get_node("Camera2D").limit_bottom = 256
+		get_node("Camera2D").limit_top = -256
 
 func _physics_process(delta: float) -> void:
 	if !is_dashing:
 		if  !is_on_floor():
-			velocity += get_gravity() * delta
 			animation.play("jump")
+			if is_player_flipped:
+				velocity -= get_gravity() * delta
+			else:
+				velocity += get_gravity() * delta
 			
 		var direction := Input.get_axis("left", "right")
 		if direction:
@@ -59,7 +66,7 @@ func _physics_process(delta: float) -> void:
 			current_extra_jumps = initial_extra_jumps
 			if Input.is_action_just_pressed("jump"):
 				if GameManager.acquired_flip_jump:
-					flip()
+					flip_jump()
 				else:
 					velocity.y = jump_velocity
 					jumping_particles.emitting = true
@@ -73,7 +80,7 @@ func _physics_process(delta: float) -> void:
 				walking_particles.emitting = false
 				
 			if Input.is_action_just_pressed("down") and GameManager.acquired_drop_through_platform:
-				if is_flipped:
+				if is_player_flipped or is_gravity_flipped:
 					position.y -= 1
 				else:
 					position.y += 1
@@ -93,7 +100,7 @@ func _physics_process(delta: float) -> void:
 					velocity.y = jump_velocity
 					jump_sfx.play()
 					
-			if (!is_on_floor() and velocity.y > 0 and is_on_wall() and velocity.x != 0 and !is_flipped) or (!is_on_floor() and velocity.y < 0 and is_on_wall() and velocity.x != 0 and is_flipped):
+			if (!is_on_floor() and velocity.y > 0 and is_on_wall() and velocity.x != 0 and (!is_gravity_flipped or !is_player_flipped)) or (!is_on_floor() and velocity.y < 0 and is_on_wall() and velocity.x != 0 and (is_gravity_flipped or is_player_flipped)):
 				current_extra_jumps = initial_extra_jumps
 				look_dir_x = sign(velocity.x)
 				animation.play("wall_slide")
@@ -149,13 +156,20 @@ func flip():
 	jump_velocity *= -1
 	wall_gravity *= -1
 	scale.y *= -1
-	if is_flipped:
+	if is_gravity_flipped:
 		PhysicsServer2D.area_set_param(get_viewport().find_world_2d().space, PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR, Vector2.DOWN)
 		up_direction = Vector2.UP
 	else:
 		PhysicsServer2D.area_set_param(get_viewport().find_world_2d().space, PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR, Vector2.UP)
 		up_direction = Vector2.DOWN
-	is_flipped = !is_flipped
+	is_gravity_flipped = !is_gravity_flipped
+	
+func flip_jump():
+	jump_velocity *= -1
+	wall_gravity *= -1
+	scale.y *= -1
+	up_direction = Vector2.UP if is_player_flipped else Vector2.DOWN
+	is_player_flipped = !is_player_flipped
 
 func _on_kill_timer_timeout() -> void:
 	Engine.time_scale = 1.0

@@ -184,26 +184,6 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_idal5")
 theme_override_styles/normal = SubResource("StyleBoxFlat_oegyn")
 text = "Back"
 
-[node name="InDevLabel" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 425.0
-offset_top = -415.0
-offset_right = 609.0
-offset_bottom = -383.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_constants/line_spacing = 30
-theme_override_fonts/font = ExtResource("2_5vuwt")
-theme_override_font_sizes/font_size = 16
-text = "In Development"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [connection signal="pressed" from="HBoxContainer/Level1Button" to="." method="_on_level_1_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/Level2Button" to="." method="_on_level_2_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/Level3Button" to="." method="_on_level_3_button_pressed"]
