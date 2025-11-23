@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bgppa18ed12nj"
-path="res://.godot/imported/speed_boost.png-415aa9e6e2b18067a2d9e843db09f7cc.ctex"
+uid="uid://slkiy0k8557h"
+path="res://.godot/imported/power-up.png-51d27a662c656b851bb10b37092323ce.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/speed_boost.png"
-dest_files=["res://.godot/imported/speed_boost.png-415aa9e6e2b18067a2d9e843db09f7cc.ctex"]
+source_file="res://assets/power-up.png"
+dest_files=["res://.godot/imported/power-up.png-51d27a662c656b851bb10b37092323ce.ctex"]
 
 [params]
 

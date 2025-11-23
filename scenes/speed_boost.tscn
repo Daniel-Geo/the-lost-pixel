@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://b2qw8xkntbknn"]
 
 [ext_resource type="Script" uid="uid://d33a42tovsu6c" path="res://scripts/speed_boost.gd" id="1_rmo5g"]
-[ext_resource type="Texture2D" uid="uid://bgppa18ed12nj" path="res://assets/speed_boost.png" id="2_miigo"]
+[ext_resource type="Texture2D" uid="uid://slkiy0k8557h" path="res://assets/power-up.png" id="2_miigo"]
 [ext_resource type="AudioStream" uid="uid://b1x822v068yv5" path="res://sfx/retro-power-up.wav" id="3_miigo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4k7nx"]

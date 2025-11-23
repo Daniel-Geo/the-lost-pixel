@@ -16,14 +16,17 @@ var acquired_flip := false
 
 func _ready() -> void:
 	if get_tree().current_scene:
-		if get_tree().current_scene.name == "Level5" or get_tree().current_scene.name == "Level6":
+		if get_tree().current_scene.name == "Level5" or get_tree().current_scene.name == "Level6" or get_tree().current_scene.name == "Level7":
 			GameManager.acquired_double_jump = true
-		if get_tree().current_scene.name == "Level4" or get_tree().current_scene.name == "Level5" or get_tree().current_scene.name == "Level6":
+		if get_tree().current_scene.name == "Level4" or get_tree().current_scene.name == "Level5" or get_tree().current_scene.name == "Level6" or get_tree().current_scene.name == "Level7":
 			GameManager.acquired_wall_jump = true
-		if get_tree().current_scene.name == "Level3" or get_tree().current_scene.name == "Level4" or get_tree().current_scene.name == "Level5" or get_tree().current_scene.name == "Level6":
+		if get_tree().current_scene.name == "Level3" or get_tree().current_scene.name == "Level4" or get_tree().current_scene.name == "Level5" or get_tree().current_scene.name == "Level6" or get_tree().current_scene.name == "Level7":
 			GameManager.acquired_dash = true
-		if get_tree().current_scene.name == "Level2" or get_tree().current_scene.name == "Level3" or get_tree().current_scene.name == "Level4" or get_tree().current_scene.name == "Level5" or get_tree().current_scene.name == "Level6":
+		if get_tree().current_scene.name == "Level2" or get_tree().current_scene.name == "Level3" or get_tree().current_scene.name == "Level4" or get_tree().current_scene.name == "Level5" or get_tree().current_scene.name == "Level6" or get_tree().current_scene.name == "Level7":
 			GameManager.acquired_spell = true
+		if get_tree().current_scene.name == "Level7":
+			GameManager.acquired_flip = true
+			GameManager.acquired_flip_jump = false
 		if get_tree().current_scene.name == "Level6":
 			GameManager.acquired_flip_jump = true
 			GameManager.acquired_double_jump = false

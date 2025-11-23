@@ -123,6 +123,14 @@ frame_progress = 0.69604
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_qhqgy")
 
+[node name="TerminationZone" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TerminationZone"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_qhqgy")
+
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(5, 5)
 limit_bottom = 128
@@ -194,6 +202,7 @@ wait_time = 0.5
 [node name="SpellCooldown" type="Timer" parent="."]
 wait_time = 0.4
 
+[connection signal="body_entered" from="TerminationZone" to="." method="_on_termination_zone_body_entered"]
 [connection signal="timeout" from="KillTimer" to="." method="_on_kill_timer_timeout"]
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]

@@ -184,3 +184,12 @@ func _on_dash_timer_timeout() -> void:
 
 func _on_dash_cooldown_timeout() -> void:
 	in_dash_cooldown = false
+
+
+func _on_termination_zone_body_entered(body: Node2D) -> void:
+	if body.is_in_group("traps") and get_node("CollisionShape2D"):
+		Engine.time_scale = 0.5
+		get_node("HurtSFX").play()
+		explosion_particles.emitting = true
+		get_node("CollisionShape2D").queue_free()
+		get_node("KillTimer").start()

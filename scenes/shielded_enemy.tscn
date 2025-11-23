@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dmk7xjv7bqcys"]
+[gd_scene load_steps=10 format=3 uid="uid://dmk7xjv7bqcys"]
 
 [ext_resource type="Script" uid="uid://c4g88se46b3l1" path="res://scripts/shielded_enemy.gd" id="1_jugxh"]
 [ext_resource type="Texture2D" uid="uid://cdpin830d8ydf" path="res://assets/monochrome_tilemap_transparent_packed.png" id="1_pkkv4"]
 [ext_resource type="PackedScene" uid="uid://c74aod1lijcu8" path="res://scenes/killzone.tscn" id="2_jugxh"]
+[ext_resource type="PackedScene" uid="uid://crlcmf67mx67q" path="res://scenes/explosion.tscn" id="3_yey4o"]
+[ext_resource type="AudioStream" uid="uid://bfvswkwhoennt" path="res://sfx/retro-explosion.mp3" id="5_e5lki"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yey4o"]
 atlas = ExtResource("1_pkkv4")
@@ -37,6 +39,8 @@ sprite_frames = SubResource("SpriteFrames_0yacd")
 animation = &"move"
 autoplay = "move"
 
+[node name="Explosion" parent="." instance=ExtResource("3_yey4o")]
+
 [node name="Killzone" parent="." instance=ExtResource("2_jugxh")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
@@ -49,7 +53,7 @@ rotation = 1.5708
 target_position = Vector2(2.16961e-05, 6)
 
 [node name="RayCastDownLeft" type="RayCast2D" parent="."]
-position = Vector2(-6, 2)
+position = Vector2(-7, 2)
 target_position = Vector2(2.38419e-07, 8)
 
 [node name="RayCastRight" type="RayCast2D" parent="."]
@@ -58,5 +62,9 @@ rotation = -1.5708
 target_position = Vector2(-2.16961e-05, 6)
 
 [node name="RayCastDownRight" type="RayCast2D" parent="."]
-position = Vector2(6, 2)
+position = Vector2(7, 2)
 target_position = Vector2(-2.38419e-07, 8)
+
+[node name="ExplosionSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_e5lki")
+bus = &"SFX"

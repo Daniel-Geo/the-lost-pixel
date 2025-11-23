@@ -34,6 +34,6 @@ stream = ExtResource("4_mobtd")
 volume_db = -3.0
 bus = &"Music"
 
-[node name="Level6Music" type="AudioStreamPlayer" parent="." groups=["Music"]]
+[node name="SpaceLevelsMusic" type="AudioStreamPlayer" parent="." groups=["Music"]]
 stream = ExtResource("7_keplp")
 bus = &"Music"

@@ -188,7 +188,7 @@ theme_override_constants/line_spacing = 30
 theme_override_fonts/font = ExtResource("2_d0u3u")
 theme_override_font_sizes/font_size = 32
 text = "Use your soul spell projectile with the X or L keys
-after you have accuired it in level 2"
+after you have acquired it in level 2"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -208,7 +208,7 @@ grow_vertical = 2
 theme_override_constants/line_spacing = 30
 theme_override_fonts/font = ExtResource("2_d0u3u")
 theme_override_font_sizes/font_size = 32
-text = "Dash with the C key after accuiring it in level 3"
+text = "Dash with the C key after acquiring it in level 3"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -228,7 +228,7 @@ grow_vertical = 0
 theme_override_constants/line_spacing = 30
 theme_override_fonts/font = ExtResource("2_d0u3u")
 theme_override_font_sizes/font_size = 32
-text = "Wall jump after accuiring it in level 4"
+text = "Wall jump after acquiring it in level 4"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -248,7 +248,7 @@ grow_vertical = 0
 theme_override_constants/line_spacing = 30
 theme_override_fonts/font = ExtResource("2_d0u3u")
 theme_override_font_sizes/font_size = 32
-text = "Double jump after accuiring it in level 5"
+text = "Double jump after acquiring it in level 5"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -260,18 +260,38 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -628.0
-offset_top = -182.0
+offset_top = -178.0
 offset_right = 628.0
-offset_bottom = -88.0
+offset_bottom = -146.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/line_spacing = 30
 theme_override_fonts/font = ExtResource("2_d0u3u")
 theme_override_font_sizes/font_size = 32
-text = "Flip payer gravity with F or I keys
-after acquiring it in level 6"
+text = "Flip player gravity instead of jumping in level 6"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="FlipGravityLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -628.0
+offset_top = -126.0
+offset_right = 628.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/line_spacing = 30
+theme_override_fonts/font = ExtResource("2_d0u3u")
+theme_override_font_sizes/font_size = 32
+text = "Flip gravity with F or I keys after acquiring it in level 7"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="BackButton" type="Button" parent="."]
 layout_mode = 1
@@ -303,9 +323,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 42.0
+offset_left = 242.0
 offset_top = -75.0
-offset_right = 390.0
+offset_right = 590.0
 offset_bottom = -23.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -344,16 +364,16 @@ autoplay = "run"
 frame = 1
 frame_progress = 0.973012
 
-[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="VBoxContainer"]
+[node name="AnimatedDashSprite2D" type="AnimatedSprite2D" parent="VBoxContainer"]
 texture_filter = 1
-position = Vector2(675, 637)
-scale = Vector2(10, 10)
+position = Vector2(293, 667)
+scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_hy8xy")
 animation = &"run"
 frame = 4
 frame_progress = 0.997687
 
-[node name="Dash" type="CPUParticles2D" parent="VBoxContainer/AnimatedSprite2D2"]
+[node name="Dash" type="CPUParticles2D" parent="VBoxContainer/AnimatedDashSprite2D"]
 position = Vector2(-3, 1)
 amount = 1000
 lifetime = 0.5
@@ -365,7 +385,7 @@ scale_amount_max = 5.0
 scale_amount_curve = SubResource("Curve_8jatx")
 
 [node name="Sprite2D" type="Sprite2D" parent="VBoxContainer"]
-position = Vector2(131, 390)
+position = Vector2(131, 380)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("6_2q5co")
 
