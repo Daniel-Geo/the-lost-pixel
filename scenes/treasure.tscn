@@ -40,7 +40,7 @@ script = ExtResource("1_it12x")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_h5oxq")
-animation = &"closed"
+animation = &"opened"
 autoplay = "closed"
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -56,13 +56,15 @@ bus = &"SFX"
 
 [node name="WinLabel" type="Label" parent="."]
 visible = false
-offset_left = -23.0
-offset_top = -19.0
-offset_right = 23.0
-offset_bottom = 4.0
+offset_left = -57.0
+offset_top = -42.0
+offset_right = 58.0
+offset_bottom = -19.0
 theme_override_fonts/font = ExtResource("4_wqbho")
 theme_override_font_sizes/font_size = 8
-text = "You Win"
+text = "You Win
+You collected"
+horizontal_alignment = 1
 
 [node name="LoseLabel" type="Label" parent="."]
 visible = false

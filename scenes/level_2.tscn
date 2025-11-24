@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://b6fp0pyq4r84f"]
+[gd_scene load_steps=22 format=4 uid="uid://b6fp0pyq4r84f"]
 
 [ext_resource type="Script" uid="uid://bw6bucq7xhn34" path="res://scripts/game_manager.gd" id="1_b4j7a"]
 [ext_resource type="Texture2D" uid="uid://cdpin830d8ydf" path="res://assets/monochrome_tilemap_transparent_packed.png" id="2_wo48x"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://o2284uw2mcxs" path="res://scenes/flying_enemy.tscn" id="7_ne2mo"]
 [ext_resource type="PackedScene" uid="uid://liuv47gw6dw8" path="res://scenes/coin.tscn" id="8_ne2mo"]
 [ext_resource type="PackedScene" uid="uid://dclku2xlaeu1d" path="res://scenes/key.tscn" id="9_que50"]
+[ext_resource type="Texture2D" uid="uid://joi14enqbvvt" path="res://assets/HDD.png" id="10_172wr"]
 [ext_resource type="PackedScene" uid="uid://cuetrkaqtmq3e" path="res://scenes/treasure.tscn" id="10_hey2k"]
 [ext_resource type="FontFile" uid="uid://basqycvpfvco2" path="res://fonts/PixelOperator8.ttf" id="10_que50"]
 [ext_resource type="PackedScene" uid="uid://doma5c4aw3btc" path="res://scenes/pause_menu.tscn" id="11_hey2k"]
@@ -1135,7 +1136,12 @@ req_coins = 6
 
 [node name="Treasure" parent="." instance=ExtResource("10_hey2k")]
 position = Vector2(1736, -72)
+item = "HDD"
 next_scene = "level_3"
+
+[node name="Sprite2D" type="Sprite2D" parent="Treasure"]
+position = Vector2(0, -16)
+texture = ExtResource("10_172wr")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://bdk510uvwlg3r"]
+[gd_scene load_steps=26 format=4 uid="uid://bdk510uvwlg3r"]
 
 [ext_resource type="Script" uid="uid://bw6bucq7xhn34" path="res://scripts/game_manager.gd" id="1_isi3j"]
 [ext_resource type="PackedScene" uid="uid://c6a3ng7t78g57" path="res://scenes/player.tscn" id="3_abjnl"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cuetrkaqtmq3e" path="res://scenes/treasure.tscn" id="6_lk3oq"]
 [ext_resource type="FontFile" uid="uid://basqycvpfvco2" path="res://fonts/PixelOperator8.ttf" id="7_hrd5w"]
 [ext_resource type="PackedScene" uid="uid://doma5c4aw3btc" path="res://scenes/pause_menu.tscn" id="8_5fwrv"]
+[ext_resource type="Texture2D" uid="uid://c7lgv1bjl2nx6" path="res://assets/Framework.png" id="8_lk3oq"]
 [ext_resource type="PackedScene" uid="uid://dda1woim7b58q" path="res://scenes/box.tscn" id="9_e3utc"]
 [ext_resource type="PackedScene" uid="uid://b2qw8xkntbknn" path="res://scenes/speed_boost.tscn" id="10_kuph3"]
 [ext_resource type="PackedScene" uid="uid://c4syptu3nod08" path="res://scenes/enemy.tscn" id="11_2hef4"]
@@ -1499,11 +1500,15 @@ position = Vector2(-2736, 40)
 
 [node name="Key" parent="." instance=ExtResource("5_2hef4")]
 position = Vector2(-2280, 24)
-req_coins = 4
 
 [node name="Treasure" parent="." instance=ExtResource("6_lk3oq")]
 position = Vector2(-2544, -8)
-next_scene = "level_7"
+item = "Framework"
+next_scene = "main_menu"
+
+[node name="Sprite2D" type="Sprite2D" parent="Treasure"]
+position = Vector2(0, -16)
+texture = ExtResource("8_lk3oq")
 
 [node name="SpeedBoost" parent="." instance=ExtResource("10_kuph3")]
 position = Vector2(0, -40)

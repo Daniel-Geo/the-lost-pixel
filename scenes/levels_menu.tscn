@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://cr15atedmradh"]
+[gd_scene load_steps=14 format=3 uid="uid://cr15atedmradh"]
 
 [ext_resource type="Script" uid="uid://dlvwx8g55c26w" path="res://scripts/levels_menu.gd" id="1_5vuwt"]
 [ext_resource type="Texture2D" uid="uid://didp8hvt4u06f" path="res://assets/background.png" id="1_grwcp"]
 [ext_resource type="FontFile" uid="uid://basqycvpfvco2" path="res://fonts/PixelOperator8.ttf" id="2_5vuwt"]
+[ext_resource type="FontFile" uid="uid://dye1loha3isvx" path="res://fonts/PixelOperator8-Bold.ttf" id="3_250ps"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_250ps"]
 texture = ExtResource("1_grwcp")
@@ -71,6 +72,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_250ps")
+
+[node name="MainLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -348.0
+offset_top = 26.0
+offset_right = 348.0
+offset_bottom = 90.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_250ps")
+theme_override_font_sizes/font_size = 64
+text = "Level Select"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="BackButton" type="Button" parent="."]
 layout_mode = 1
@@ -202,9 +219,10 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_8gkdn")
 theme_override_styles/hover = SubResource("StyleBoxFlat_xc0ai")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_y0kpc")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ktp5v")
+disabled = true
 text = "Level 7"
 
-[node name="DoubleJumpLabel" type="Label" parent="."]
+[node name="DevelopmentLabel" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -220,7 +238,7 @@ grow_vertical = 2
 theme_override_constants/line_spacing = 30
 theme_override_fonts/font = ExtResource("2_5vuwt")
 theme_override_font_sizes/font_size = 16
-text = "In development"
+text = "In early development"
 horizontal_alignment = 1
 vertical_alignment = 1
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://bm7oeq8xq1gyo"]
+[gd_scene load_steps=22 format=4 uid="uid://bm7oeq8xq1gyo"]
 
 [ext_resource type="Script" uid="uid://bw6bucq7xhn34" path="res://scripts/game_manager.gd" id="1_2y5yt"]
 [ext_resource type="Texture2D" uid="uid://cdpin830d8ydf" path="res://assets/monochrome_tilemap_transparent_packed.png" id="2_2os1m"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dclku2xlaeu1d" path="res://scenes/key.tscn" id="9_x2xxo"]
 [ext_resource type="PackedScene" uid="uid://cuetrkaqtmq3e" path="res://scenes/treasure.tscn" id="10_2cbcq"]
 [ext_resource type="FontFile" uid="uid://basqycvpfvco2" path="res://fonts/PixelOperator8.ttf" id="10_2y5yt"]
+[ext_resource type="Texture2D" uid="uid://dk5dtisxvbskw" path="res://assets/RAM.png" id="10_go7sj"]
 [ext_resource type="PackedScene" uid="uid://doma5c4aw3btc" path="res://scenes/pause_menu.tscn" id="11_2os1m"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2y5yt"]
@@ -1095,7 +1096,12 @@ req_coins = 6
 
 [node name="Treasure" parent="." instance=ExtResource("10_2cbcq")]
 position = Vector2(1516, 72)
+item = "RAM"
 next_scene = "level_2"
+
+[node name="Sprite2D" type="Sprite2D" parent="Treasure"]
+position = Vector2(0, -16)
+texture = ExtResource("10_go7sj")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

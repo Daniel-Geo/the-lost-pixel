@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://gdkmrt3xc1jw"]
+[gd_scene load_steps=26 format=4 uid="uid://gdkmrt3xc1jw"]
 
 [ext_resource type="PackedScene" uid="uid://c6a3ng7t78g57" path="res://scenes/player.tscn" id="1_70nk6"]
 [ext_resource type="Script" uid="uid://bw6bucq7xhn34" path="res://scripts/game_manager.gd" id="1_p6vls"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://dclku2xlaeu1d" path="res://scenes/key.tscn" id="6_56dhn"]
 [ext_resource type="PackedScene" uid="uid://doma5c4aw3btc" path="res://scenes/pause_menu.tscn" id="6_vcx5n"]
 [ext_resource type="PackedScene" uid="uid://cuetrkaqtmq3e" path="res://scenes/treasure.tscn" id="7_ax3dk"]
+[ext_resource type="Texture2D" uid="uid://c4iw3lwy5if82" path="res://assets/SSD.png" id="11_q2dsb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ax3dk"]
 texture = ExtResource("3_hhfj6")
@@ -1243,7 +1244,12 @@ req_coins = 5
 
 [node name="Treasure" parent="." instance=ExtResource("7_ax3dk")]
 position = Vector2(2000, -304)
+item = "SSD"
 next_scene = "level_4"
+
+[node name="Sprite2D" type="Sprite2D" parent="Treasure"]
+position = Vector2(0, -16)
+texture = ExtResource("11_q2dsb")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
