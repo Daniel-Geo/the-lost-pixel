@@ -1500,6 +1500,7 @@ position = Vector2(-2736, 40)
 
 [node name="Key" parent="." instance=ExtResource("5_2hef4")]
 position = Vector2(-2280, 24)
+req_coins = 4
 
 [node name="Treasure" parent="." instance=ExtResource("6_lk3oq")]
 position = Vector2(-2544, -8)
