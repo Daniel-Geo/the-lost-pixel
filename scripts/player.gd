@@ -7,7 +7,9 @@ var wall_gravity: float = 100.0
 
 const DASH_SPEED: float = 500.0
 const INITIAL_DASH_TIMES: int = 1
-const ACCELERATION: float = 18.5
+const ACCELERATION: float = 0.01
+const SLIDE: float = 0.01
+const FULLSTOP: float = 5
 
 var in_spell_cooldown := false
 var current_dash_times: int = INITIAL_DASH_TIMES
@@ -22,6 +24,8 @@ var is_gravity_flipped := false
 const WALL_CONTACT_COYOTE_TIME: float = 0.2
 var wall_contact_coyote: float = 0.0
 
+var was_on_ice: bool = false
+
 
 @onready var animation: AnimatedSprite2D = $AnimatedSprite2D
 @onready var jump_sfx: AudioStreamPlayer = $JumpSFX
@@ -33,6 +37,11 @@ var wall_contact_coyote: float = 0.0
 @onready var spell_cooldown: Timer = $SpellCooldown
 @onready var dash_timer: Timer = $DashTimer
 @onready var dash_cooldown: Timer = $DashCooldown
+@onready var floor_ray_cast_left: RayCast2D = $FloorRayCastLeft
+@onready var floor_ray_cast_right: RayCast2D = $FloorRayCastRight
+@onready var floor_ray_cast_down_left: RayCast2D = $FloorRayCastDownLeft
+@onready var floor_ray_cast_down_right: RayCast2D = $FloorRayCastDownRight
+
 
 func _ready() -> void:
 	Engine.time_scale = 1.0
@@ -50,18 +59,34 @@ func _physics_process(delta: float) -> void:
 				velocity -= get_gravity() * delta
 			else:
 				velocity += get_gravity() * delta
-			
+		
 		var direction := Input.get_axis("left", "right")
-		if direction:
-			velocity.x = direction * speed
-			if direction == 1:
-				animation.flip_h = false
-			elif direction == -1:
-				animation.flip_h = true
-		else:
-			velocity.x = move_toward(velocity.x, 0, speed) 
+		animation.flip_h = false if direction > 0 else true
+		if is_on_ice() and was_on_ice and !is_on_wall_only():
+			print("ice: ", is_on_ice(), " ", was_on_ice, " ", !is_on_wall_only())
+			if direction:
+				velocity.x = lerp(velocity.x, direction * speed, ACCELERATION)
+			else:
+				velocity.x = lerp(velocity.x, 0.0, SLIDE)
+				
+				if velocity.x < FULLSTOP and velocity.x > -FULLSTOP:
+					velocity.x = 0
+		
+		elif is_on_ground() or !was_on_ice or (is_on_wall() and !is_ice_wall()):
+			print("ground: ", is_on_ground(), " ", !was_on_ice, " ", is_on_wall(), " ", !is_ice_wall())
+			if direction:
+				velocity.x = direction * speed
+			else:
+				velocity.x = move_toward(velocity.x, 0, speed)
 		
 		if is_on_floor():
+			if direction:
+				animation.play("run")
+				walking_particles.emitting = true
+			else:
+				animation.play("idle")
+				walking_particles.emitting = false
+			
 			current_dash_times = INITIAL_DASH_TIMES
 			current_extra_jumps = initial_extra_jumps
 			if Input.is_action_just_pressed("jump"):
@@ -72,13 +97,6 @@ func _physics_process(delta: float) -> void:
 					jumping_particles.emitting = true
 					jump_sfx.play()
 			
-			if direction:
-				animation.play("run")
-				walking_particles.emitting = true
-			else:
-				animation.play("idle")
-				walking_particles.emitting = false
-				
 			if Input.is_action_just_pressed("down") and GameManager.acquired_drop_through_platform:
 				if is_player_flipped or is_gravity_flipped:
 					position.y -= 1
@@ -86,21 +104,21 @@ func _physics_process(delta: float) -> void:
 					position.y += 1
 		else:
 			walking_particles.emitting = false
-			if Input.is_action_just_pressed("jump") and !is_on_wall() and current_extra_jumps > 0 and GameManager.acquired_double_jump:
+			if Input.is_action_just_pressed("jump") and (!is_on_wall() or is_ice_wall()) and current_extra_jumps > 0 and GameManager.acquired_double_jump:
 				velocity.y = jump_velocity
 				jumping_particles.emitting = true
 				jump_sfx.play()
 				current_extra_jumps -= 1
 				
 		if GameManager.acquired_wall_jump:
-			if is_on_wall():
+			if is_on_wall_only() and !is_ice_wall():
 				current_extra_jumps = initial_extra_jumps
 				current_dash_times = INITIAL_DASH_TIMES
 				if Input.is_action_just_pressed("jump") and wall_contact_coyote > 0.0:
 					velocity.y = jump_velocity
 					jump_sfx.play()
 					
-			if (!is_on_floor() and velocity.y > 0 and is_on_wall() and velocity.x != 0 and (!is_gravity_flipped or !is_player_flipped)) or (!is_on_floor() and velocity.y < 0 and is_on_wall() and velocity.x != 0 and (is_gravity_flipped or is_player_flipped)):
+			if (!is_on_floor() and velocity.y > 0 and is_on_wall() and direction != 0 and !is_ice_wall() and (!is_gravity_flipped or !is_player_flipped)) or (!is_on_floor() and velocity.y < 0 and is_on_wall() and direction != 0 and !is_ice_wall() and (is_gravity_flipped or is_player_flipped)):
 				current_extra_jumps = initial_extra_jumps
 				look_dir_x = sign(velocity.x)
 				animation.play("wall_slide")
@@ -193,3 +211,46 @@ func _on_termination_zone_body_entered(body: Node2D) -> void:
 		explosion_particles.emitting = true
 		get_node("CollisionShape2D").queue_free()
 		get_node("KillTimer").start()
+		
+func is_on_ice():
+	var collider_down_left = floor_ray_cast_down_left.get_collider()
+	var collider_down_right = floor_ray_cast_down_right.get_collider()
+	print(collider_down_left, " ", collider_down_right)
+	if collider_down_left:
+		if collider_down_left.name == "Ice":
+			was_on_ice = true
+			return true
+	elif collider_down_right:
+		if collider_down_right.name == "Ice":
+			was_on_ice = true
+			return true
+	else:
+		return false
+		
+func is_on_ground():
+	var collider_down_left = floor_ray_cast_down_left.get_collider()
+	var collider_down_right = floor_ray_cast_down_right.get_collider()
+	if collider_down_left:
+		if collider_down_left.name == "Ground":
+			was_on_ice = false
+			return true
+	elif collider_down_right:
+		if collider_down_right.name == "Ground":
+			was_on_ice = false
+			return true
+	else:
+		if (is_on_wall() and !is_ice_wall()):
+			was_on_ice = false
+		return false
+
+func is_ice_wall():
+	var collider_left = floor_ray_cast_left.get_collider()
+	var collider_right = floor_ray_cast_right.get_collider()
+	if collider_left:
+		if collider_left.name == "Ice":
+			return true
+	elif collider_right:
+		if collider_right.name == "Ice":
+			return true
+	else:
+		return false

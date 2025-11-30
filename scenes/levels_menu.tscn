@@ -219,28 +219,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_8gkdn")
 theme_override_styles/hover = SubResource("StyleBoxFlat_xc0ai")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_y0kpc")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ktp5v")
-disabled = true
 text = "Level 7"
-
-[node name="DevelopmentLabel" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 169.0
-offset_top = 61.0
-offset_right = 353.0
-offset_bottom = 93.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/line_spacing = 30
-theme_override_fonts/font = ExtResource("2_5vuwt")
-theme_override_font_sizes/font_size = 16
-text = "In early development"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Level1Button" to="." method="_on_level_1_button_pressed"]

@@ -137,6 +137,24 @@ limit_bottom = 128
 drag_left_margin = 0.1
 drag_right_margin = 0.1
 
+[node name="FloorRayCastLeft" type="RayCast2D" parent="."]
+position = Vector2(0, 4)
+rotation = -1.57079
+target_position = Vector2(0, 5)
+
+[node name="FloorRayCastRight" type="RayCast2D" parent="."]
+position = Vector2(0, 4)
+rotation = 1.57079
+target_position = Vector2(0, 5)
+
+[node name="FloorRayCastDownLeft" type="RayCast2D" parent="."]
+position = Vector2(-4, 0)
+target_position = Vector2(0, 5)
+
+[node name="FloorRayCastDownRight" type="RayCast2D" parent="."]
+position = Vector2(4, 0)
+target_position = Vector2(0, 5)
+
 [node name="Explosion" parent="." instance=ExtResource("4_qlg0r")]
 
 [node name="Dash" type="CPUParticles2D" parent="."]
