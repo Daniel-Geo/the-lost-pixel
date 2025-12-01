@@ -1729,7 +1729,7 @@ req_coins = 2
 
 [node name="Treasure" parent="." instance=ExtResource("7_e8vmx")]
 position = Vector2(904, -152)
-item = "Framework"
+item = "Framework upgrade"
 next_scene = "main_menu"
 
 [node name="Sprite2D" type="Sprite2D" parent="Treasure"]
