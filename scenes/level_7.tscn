@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://bw6bucq7xhn34" path="res://scripts/game_manager.gd" id="1_v7yg4"]
 [ext_resource type="Texture2D" uid="uid://br3plnqdqsu6e" path="res://assets/monochrome_tilemap_transparent_packed-edited.png" id="2_ci1vt"]
 [ext_resource type="PackedScene" uid="uid://c6a3ng7t78g57" path="res://scenes/player.tscn" id="3_ophlp"]
-[ext_resource type="Shader" uid="uid://dhtco1uiiiuhu" path="res://shaders/snowflakes.gdshader" id="4_q4s3e"]
 [ext_resource type="PackedScene" uid="uid://c74aod1lijcu8" path="res://scenes/killzone.tscn" id="4_wu5f3"]
 [ext_resource type="FontFile" uid="uid://basqycvpfvco2" path="res://fonts/PixelOperator8.ttf" id="5_fsh38"]
 [ext_resource type="Texture2D" uid="uid://c4eh126vw3psl" path="res://assets/pixel_snowflakes.png" id="5_uk7qm"]
@@ -1604,13 +1603,17 @@ physics_layer_0/collision_layer = 3
 physics_layer_0/collision_mask = 3
 sources/0 = SubResource("TileSetAtlasSource_fsh38")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jw05p"]
-shader = ExtResource("4_q4s3e")
-shader_parameter/region_px = Vector4(0, 0, 0, 0)
+[sub_resource type="AtlasTexture" id="AtlasTexture_uk7qm"]
+atlas = ExtResource("5_uk7qm")
+region = Rect2(0, 0, 9, 9)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7tfso"]
 atlas = ExtResource("5_uk7qm")
-region = Rect2(0, 0, 9, 9)
+region = Rect2(0, 18, 9, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l5pst"]
+atlas = ExtResource("5_uk7qm")
+region = Rect2(45, 0, 9, 9)
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_36u6r"]
 
@@ -1648,12 +1651,11 @@ tile_set = SubResource("TileSet_uk7qm")
 
 [node name="Ground" type="TileMapLayer" parent="."]
 texture_filter = 1
-tile_map_data = PackedByteArray("AAD+/wAAAAALAA0AAAD//wAAAAALAA0AAAAAAAAAAAALAA0AAAABAAAAAAALAA0AAAACAAAAAAALAA0AAAADAAAAAAALAA0AAAAEAAAAAAAMAA0AAAD7/wAAAAAKAA0AAAD7/wEAAAAKAA4AAAD7/wIAAAAKAA4AAAD7/wMAAAAKAA4AAAD7/wQAAAAKAA4AAAD7/wUAAAAKAA4AAAD7/wYAAAAKAA4AAAD7/wcAAAAKAA4AAAD7/wgAAAAKAA4AAAD7/wkAAAAKAA4AAAD7/woAAAAKAA4AAAD7/wsAAAAKAA4AAAD7/wwAAAAKAA4AAAD7/w0AAAAKAA4AAAD7/w4AAAAKAA4AAAD7/w8AAAAKAA4AAAD8/wAAAAALAA0AAAD9/wAAAAALAA0AAAAEAAEAAAAMAA4AAAAEAAIAAAAMAA4AAAAEAAMAAAAMAA4AAAAEAAQAAAAMAA4AAAAEAAUAAAAMAA4AAAAEAAYAAAAMAA4AAAAEAAcAAAAMAA4AAAAEAAgAAAAMAA4AAAAEAAkAAAAMAA4AAAAEAAoAAAAMAA4AAAAEAAsAAAAMAA4AAAAEAAwAAAAMAA4AAAAEAA0AAAAMAA4AAAAEAA4AAAAMAA4AAAAEAA8AAAAMAA4AAAA=")
+tile_map_data = PackedByteArray("AAD+/wAAAAALAA0AAAD//wAAAAALAA0AAAAAAAAAAAALAA0AAAABAAAAAAALAA0AAAACAAAAAAALAA0AAAADAAAAAAALAA0AAAAEAAAAAAAMAA0AAAD7/wAAAAAKAA0AAAD7/wEAAAAKAA4AAAD7/wIAAAAKAA4AAAD7/wMAAAAKAA4AAAD7/wQAAAAKAA4AAAD7/wUAAAAKAA4AAAD7/wYAAAAKAA4AAAD7/wcAAAAKAA4AAAD8/wAAAAALAA0AAAD9/wAAAAALAA0AAAAEAAEAAAAMAA4AAAAEAAIAAAAMAA4AAAAEAAMAAAAMAA4AAAAEAAQAAAAMAA4AAAAEAAUAAAAMAA4AAAAEAAYAAAAMAA4AAAAEAAcAAAAMAA4AAAA=")
 tile_set = SubResource("TileSet_7tfso")
 
 [node name="Ice" type="TileMapLayer" parent="."]
 texture_filter = 1
-tile_map_data = PackedByteArray("AAAGAAAAAAAKAAkAAAAHAAAAAAALAAkAAAAIAAAAAAAMAAkAAAAJAAAAAAALAAQAAAAKAAAAAAALAAQAAAALAAAAAAALAAQAAAAKAP//AAALAAQAAAAMAAAAAAALAAQAAAANAAAAAAALAAQAAAAOAAAAAAALAAQAAAAOAP//AAALAAQAAAAOAP7/AAALAAQAAAAOAP3/AAALAAQAAAAOAPz/AAALAAQAAAAOAPv/AAALAAQAAAAOAPr/AAALAAQAAAAOAPP/AAALAAQAAAAOAPT/AAALAAQAAAAOAPX/AAALAAQAAAAOAPb/AAALAAQAAAAOAPf/AAALAAQAAAAOAPj/AAALAAQAAAAOAPn/AAALAAQAAAA=")
 tile_set = SubResource("TileSet_e8vmx")
 
 [node name="Player" parent="." instance=ExtResource("3_ophlp")]
@@ -1661,7 +1663,22 @@ unique_name_in_owner = true
 position = Vector2(0, -4.1)
 
 [node name="Snowflakes" type="CPUParticles2D" parent="Player"]
-material = SubResource("ShaderMaterial_jw05p")
+use_parent_material = true
+position = Vector2(64, -100)
+amount = 80
+texture = SubResource("AtlasTexture_uk7qm")
+lifetime = 4.0
+emission_shape = 3
+emission_rect_extents = Vector2(384, 1)
+gravity = Vector2(-50, 100)
+angular_velocity_min = 10.0
+angular_velocity_max = 100.0
+damping_max = 9.239
+scale_amount_min = 0.25
+scale_amount_max = 0.5
+script = ExtResource("6_uk7qm")
+
+[node name="Snowflakes2" type="CPUParticles2D" parent="Player"]
 use_parent_material = true
 position = Vector2(64, -100)
 amount = 80
@@ -1677,11 +1694,24 @@ scale_amount_min = 0.25
 scale_amount_max = 0.5
 script = ExtResource("6_uk7qm")
 
-[node name="Timer" type="Timer" parent="Player/Snowflakes"]
-autostart = true
+[node name="Snowflakes3" type="CPUParticles2D" parent="Player"]
+use_parent_material = true
+position = Vector2(64, -100)
+amount = 80
+texture = SubResource("AtlasTexture_l5pst")
+lifetime = 4.0
+emission_shape = 3
+emission_rect_extents = Vector2(384, 1)
+gravity = Vector2(-50, 100)
+angular_velocity_min = 10.0
+angular_velocity_max = 100.0
+damping_max = 9.239
+scale_amount_min = 0.25
+scale_amount_max = 0.5
+script = ExtResource("6_uk7qm")
 
 [node name="KillzoneBottom" parent="." instance=ExtResource("4_wu5f3")]
-position = Vector2(0, 256)
+position = Vector2(0, 128)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KillzoneBottom"]
 shape = SubResource("WorldBoundaryShape2D_36u6r")
@@ -1742,5 +1772,4 @@ text = "Back"
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("6_e8vmx")]
 
-[connection signal="timeout" from="Player/Snowflakes/Timer" to="Player/Snowflakes" method="_on_timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/BackButton" to="GameManager" method="_on_back_button_pressed"]
