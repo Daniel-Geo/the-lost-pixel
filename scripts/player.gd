@@ -61,9 +61,11 @@ func _physics_process(delta: float) -> void:
 				velocity += get_gravity() * delta
 		
 		var direction := Input.get_axis("left", "right")
-		animation.flip_h = false if direction > 0 else true
-		if is_on_ice() and was_on_ice and !is_on_wall_only():
-			print("ice: ", is_on_ice(), " ", was_on_ice, " ", !is_on_wall_only())
+		if direction > 0:
+			animation.flip_h = false
+		elif direction < 0:
+			animation.flip_h = true
+		if is_on_ice() or was_on_ice and !is_on_wall_only() and !is_on_ground():
 			if direction:
 				velocity.x = lerp(velocity.x, direction * speed, ACCELERATION)
 			else:
@@ -73,7 +75,6 @@ func _physics_process(delta: float) -> void:
 					velocity.x = 0
 		
 		elif is_on_ground() or !was_on_ice or (is_on_wall() and !is_ice_wall()):
-			print("ground: ", is_on_ground(), " ", !was_on_ice, " ", is_on_wall(), " ", !is_ice_wall())
 			if direction:
 				velocity.x = direction * speed
 			else:
@@ -129,6 +130,7 @@ func _physics_process(delta: float) -> void:
 			
 	else:
 		animation.play("dash")
+		was_on_ice = false
 		velocity.y = 0
 		if !animation.flip_h:
 			velocity.x = 1 * DASH_SPEED
@@ -215,7 +217,6 @@ func _on_termination_zone_body_entered(body: Node2D) -> void:
 func is_on_ice():
 	var collider_down_left = floor_ray_cast_down_left.get_collider()
 	var collider_down_right = floor_ray_cast_down_right.get_collider()
-	print(collider_down_left, " ", collider_down_right)
 	if collider_down_left:
 		if collider_down_left.name == "Ice":
 			was_on_ice = true
@@ -248,9 +249,11 @@ func is_ice_wall():
 	var collider_right = floor_ray_cast_right.get_collider()
 	if collider_left:
 		if collider_left.name == "Ice":
+			was_on_ice = true
 			return true
 	elif collider_right:
 		if collider_right.name == "Ice":
+			was_on_ice = true
 			return true
 	else:
 		return false
