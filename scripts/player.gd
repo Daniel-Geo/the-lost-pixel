@@ -2,6 +2,7 @@ class_name Player extends CharacterBody2D
 
 
 var speed: float = 150.0
+var climb_speed: float = 100.0
 var jump_velocity: float = -300.0
 var wall_gravity: float = 100.0
 
@@ -18,13 +19,13 @@ var in_dash_cooldown := false
 var initial_extra_jumps := 1
 var current_extra_jumps: int = initial_extra_jumps
 var look_dir_x: int = 1
-var is_player_flipped:= false
+var is_player_flipped := false
 var is_gravity_flipped := false
+var was_on_ice := false
+var on_ladder := false
 
 const WALL_CONTACT_COYOTE_TIME: float = 0.2
 var wall_contact_coyote: float = 0.0
-
-var was_on_ice: bool = false
 
 
 @onready var animation: AnimatedSprite2D = $AnimatedSprite2D
@@ -41,6 +42,7 @@ var was_on_ice: bool = false
 @onready var floor_ray_cast_right: RayCast2D = $FloorRayCastRight
 @onready var floor_ray_cast_down_left: RayCast2D = $FloorRayCastDownLeft
 @onready var floor_ray_cast_down_right: RayCast2D = $FloorRayCastDownRight
+@onready var ladder_ray_cast: RayCast2D = $LadderRayCast
 
 
 func _ready() -> void:
@@ -60,28 +62,37 @@ func _physics_process(delta: float) -> void:
 			else:
 				velocity += get_gravity() * delta
 		
-		var direction := Input.get_axis("left", "right")
-		if direction > 0:
+		var direction_x := Input.get_axis("left", "right")
+		if direction_x > 0:
 			animation.flip_h = false
-		elif direction < 0:
+		elif direction_x < 0:
 			animation.flip_h = true
-		if is_on_ice() or was_on_ice and !is_on_wall_only() and !is_on_ground():
-			if direction:
-				velocity.x = lerp(velocity.x, direction * speed, ACCELERATION)
+			
+		if is_on_ladder():
+			current_dash_times = INITIAL_DASH_TIMES
+			current_extra_jumps = initial_extra_jumps
+			
+			var direction_y := Input.get_axis("up", "down")
+			velocity.y = direction_y * climb_speed
+			velocity.x = direction_x * climb_speed
+			
+		elif is_on_ice() or was_on_ice and !is_on_wall_only() and !is_on_ground() and !is_on_ladder():
+			if direction_x:
+				velocity.x = lerp(velocity.x, direction_x * speed, ACCELERATION)
 			else:
 				velocity.x = lerp(velocity.x, 0.0, SLIDE)
 				
 				if velocity.x < FULLSTOP and velocity.x > -FULLSTOP:
 					velocity.x = 0
 		
-		elif is_on_ground() or !was_on_ice or (is_on_wall() and !is_ice_wall()):
-			if direction:
-				velocity.x = direction * speed
+		elif is_on_ground() or !was_on_ice or (is_on_wall() and !is_ice_wall()) and !is_on_ladder():
+			if direction_x:
+				velocity.x = direction_x * speed
 			else:
 				velocity.x = move_toward(velocity.x, 0, speed)
 		
 		if is_on_floor():
-			if direction:
+			if direction_x:
 				animation.play("run")
 				walking_particles.emitting = true
 			else:
@@ -119,7 +130,7 @@ func _physics_process(delta: float) -> void:
 					velocity.y = jump_velocity
 					jump_sfx.play()
 					
-			if (!is_on_floor() and velocity.y > 0 and is_on_wall() and direction != 0 and !is_ice_wall() and (!is_gravity_flipped or !is_player_flipped)) or (!is_on_floor() and velocity.y < 0 and is_on_wall() and direction != 0 and !is_ice_wall() and (is_gravity_flipped or is_player_flipped)):
+			if (!is_on_floor() and velocity.y > 0 and is_on_wall() and direction_x != 0 and !is_ice_wall() and (!is_gravity_flipped or !is_player_flipped)) or (!is_on_floor() and velocity.y < 0 and is_on_wall() and direction_x != 0 and !is_ice_wall() and (is_gravity_flipped or is_player_flipped)):
 				current_extra_jumps = initial_extra_jumps
 				look_dir_x = sign(velocity.x)
 				animation.play("wall_slide")
@@ -255,5 +266,11 @@ func is_ice_wall():
 		if collider_right.name == "Ice":
 			was_on_ice = true
 			return true
+	else:
+		return false
+
+func is_on_ladder():
+	if ladder_ray_cast.get_collider():
+		return true
 	else:
 		return false
