@@ -22,7 +22,7 @@ var look_dir_x: int = 1
 var is_player_flipped := false
 var is_gravity_flipped := false
 var was_on_ice := false
-var on_ladder := false
+
 
 const WALL_CONTACT_COYOTE_TIME: float = 0.2
 var wall_contact_coyote: float = 0.0
@@ -56,7 +56,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if !is_dashing:
 		if  !is_on_floor():
-			animation.play("jump")
+			animation.play("back") if is_on_ladder() else animation.play("jump")
 			if is_player_flipped:
 				velocity -= get_gravity() * delta
 			else:
@@ -73,8 +73,8 @@ func _physics_process(delta: float) -> void:
 			current_extra_jumps = initial_extra_jumps
 			
 			var direction_y := Input.get_axis("up", "down")
-			velocity.y = direction_y * climb_speed
 			velocity.x = direction_x * climb_speed
+			velocity.y = direction_y * climb_speed
 			
 		elif is_on_ice() or was_on_ice and !is_on_wall_only() and !is_on_ground() and !is_on_ladder():
 			if direction_x:
